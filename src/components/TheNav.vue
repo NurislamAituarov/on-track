@@ -8,7 +8,7 @@
         :class="{
           'bg-gray-200 pointer-events-none': currentPage === item.title,
         }"
-        @click="$emit('open-page', item.title)"
+        @click="emit('open-page', item.title)"
       >
         <component :is="item.icon" class="w-6 h-6" />
         {{ item.title }}</NavIcon
@@ -23,7 +23,7 @@ import NavIcon from "@/components/NavIcon.vue";
 import { INavItems } from "@/types";
 
 defineProps<{ navItems: INavItems[]; currentPage: string }>();
-defineEmits(["open-page"]);
+const emit = defineEmits(["open-page"]);
 
 onMounted(() => {
   console.log("mounted", window.location.hash.substring(1));

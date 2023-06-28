@@ -6,10 +6,7 @@
   </main>
 </template>
 
-<script setup>
-import { ref, watch } from "vue";
-import { useRoute } from "vue-router";
-
+<script lang="ts" setup>
 import TheActivities from "@/pages/TheActivities.vue";
 import TheProgress from "@/pages/TheProgress.vue";
 import TheTimeline from "@/pages/TheTimeline.vue";
@@ -20,13 +17,5 @@ import {
   PAGE_PROGRESS,
 } from "../lib/constants";
 
-const page = ref(window.location.hash.slice(1));
-const route = useRoute();
-
-watch(
-  () => route.params,
-  async () => {
-    page.value = window.location.hash.slice(1);
-  }
-);
+defineProps<{ page: string }>();
 </script>

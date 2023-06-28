@@ -1,9 +1,12 @@
 <template>
   <div class="wrapper flex flex-col min-h-screen">
-    <TheHeader />
-    <TheMain />
+    <TheHeader
+      @go-to-timeline="goTo('timeline')"
+      @go-to-progress="goTo('progress')"
+    />
+    <TheMain :page="currentPage" />
     <TheNav
-      @open-page="openPage"
+      @open-page="goTo"
       :nav-items="navItems"
       :current-page="currentPage"
     />
@@ -16,40 +19,15 @@ import TheMain from "@/components/TheMain.vue";
 import TheNav from "@/components/TheNav.vue";
 import TheHeader from "@/components/TheHeader.vue";
 
-import {
-  ClockIcon,
-  ListBulletIcon,
-  ChartBarIcon,
-} from "@heroicons/vue/24/outline";
-
-import {
-  PAGE_TIMELINE,
-  PAGE_ACTIVITIES,
-  PAGE_PROGRESS,
-} from "../lib/constants";
-
-import { INavItems } from "@/types";
+import { normalizeHash } from "@/lib/helper";
+import { navItems } from "@/lib/constants";
 //////////////////////////////////////////////////////////////////
 
-const navItems: INavItems[] = [
-  { title: PAGE_TIMELINE, id: 1, icon: ClockIcon },
-  { title: PAGE_ACTIVITIES, id: 2, icon: ListBulletIcon },
-  { title: PAGE_PROGRESS, id: 3, icon: ChartBarIcon },
-];
-
 // взять из url имя странаицы
-const currentPage = ref(normalizeHash());
-function normalizeHash(): string {
-  const hash = window.location.hash.slice(1);
-  const titleNavItems = navItems.map((el) => el.title);
+const currentPage = ref(normalizeHash(navItems));
 
-  if (titleNavItems.includes(hash)) return window.location.hash.substring(1);
-  window.location.hash = PAGE_TIMELINE;
-
-  return PAGE_TIMELINE;
-}
 // Открыть новую страницу
-function openPage(page: string) {
+function goTo(page: string) {
   currentPage.value = page;
 }
 </script>

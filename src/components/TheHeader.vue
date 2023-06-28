@@ -1,23 +1,16 @@
 <template>
   <header class="header bg-white border-b p-4">
-    <a href="#" class="header__logo">
-      <img src="../assets/logo.png" alt="logo" />
-    </a>
-    <a href="#" class="text-sm">
-      <div v-if="false" class="flex items-center gap-2">
-        <p>Day complete!</p>
-        <CheckCircleIcon class="h-7 text-green-500" />
-      </div>
-      <div v-else class="flex items-center gap-2">
-        <p>Progress: <span>20%</span></p>
-        <div class="h-3 w-3 rounded-full bg-red-500"></div>
-      </div>
-    </a>
+    <THeLogo @click="$emit('go-to-timeline')" />
+
+    <TheHeaderProgress @click="$emit('go-to-progress')" />
   </header>
 </template>
 
 <script lang="ts" setup>
-import { CheckCircleIcon } from "@heroicons/vue/24/solid";
+import THeLogo from "./TheHeaderLogo.vue";
+import TheHeaderProgress from "./TheHeaderProgress.vue";
+
+defineEmits(["go-to-timeline", "go-to-progress"]);
 </script>
 
 <style lang='scss'>
