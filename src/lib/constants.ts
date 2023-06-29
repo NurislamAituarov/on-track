@@ -1,6 +1,7 @@
 export const PAGE_TIMELINE = 'timeline';
 export const PAGE_ACTIVITIES = 'activities';
 export const PAGE_PROGRESS = 'progress';
+export const HOURS_IN_DAY = 24;
 
 import { INavItems } from '@/types';
 import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outline';
