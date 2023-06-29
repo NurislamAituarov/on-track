@@ -1,6 +1,6 @@
 <template>
   <a :href="`#${PAGE_TIMELINE}`" class="header__logo">
-    <img src="../assets/logo.png" alt="logo" />
+    <img src="../../assets/logo.png" alt="logo" />
   </a>
 </template>
 

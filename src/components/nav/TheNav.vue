@@ -19,7 +19,7 @@
 
 <script lang="ts" setup>
 import { onMounted } from "vue";
-import NavIcon from "@/components/NavIcon.vue";
+import NavIcon from "@/components/nav/NavIcon.vue";
 import { INavItems } from "@/types";
 
 defineProps<{ navItems: INavItems[]; currentPage: string }>();

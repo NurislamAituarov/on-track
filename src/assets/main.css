@@ -16,3 +16,8 @@ img {
 a {
   text-decoration: none;
 }
+
+select,
+option {
+  outline: none;
+}

@@ -15,9 +15,9 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import TheMain from "@/components/TheMain.vue";
-import TheNav from "@/components/TheNav.vue";
-import TheHeader from "@/components/TheHeader.vue";
+import TheMain from "@/components/main/TheMain.vue";
+import TheNav from "@/components/nav/TheNav.vue";
+import TheHeader from "@/components/header/TheHeader.vue";
 
 import { normalizeHash } from "@/lib/helper";
 import { navItems } from "@/lib/constants";
