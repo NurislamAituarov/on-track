@@ -92,7 +92,7 @@ function listener(e: Event) {
   left: 0;
   top: 100%;
   background: white;
-  z-index: 10;
+  z-index: 100;
   border: 1px solid rgb(222, 222, 222);
   box-shadow: 1px 1px 15px 2px rgb(237, 237, 237);
   border-radius: 5px;

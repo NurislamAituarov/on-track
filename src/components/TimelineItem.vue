@@ -1,5 +1,8 @@
 <template>
-  <li class="relative flex flex-col gap-2 border-t py-10 px-4">
+  <li
+    ref="refTimelineItem"
+    class="relative flex flex-col gap-2 border-t py-10 px-4"
+  >
     <TimeLineHour :timelineItem="timelineItem" />
     <BaseSelect
       :options="options"
@@ -12,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { IOptionsItem, THourItem } from "@/types";
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import TimeLineHour from "./TimeLineHour.vue";
@@ -20,7 +23,7 @@ import TimeLineHour from "./TimeLineHour.vue";
 interface Props {
   timelineItem: THourItem;
 }
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const options: IOptionsItem[] = [
   {
@@ -37,6 +40,17 @@ const options: IOptionsItem[] = [
   },
 ];
 
+onMounted(() => {
+  if (props.timelineItem.hour === new Date().getHours()) {
+    const height = refTimelineItem.value.offsetTop;
+    window.scrollTo({
+      top: height - 400,
+      behavior: "smooth",
+    });
+  }
+});
+
+const refTimelineItem = ref();
 const selectedActivityId = ref();
 
 function selectActivity(value: number) {

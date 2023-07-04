@@ -1,8 +1,8 @@
 <template>
   <main class="main flex flex-grow flex-col">
+    <TheTimeline v-show="page === PAGE_TIMELINE" />
     <TheActivities v-show="page === PAGE_ACTIVITIES" />
     <TheProgress v-show="page === PAGE_PROGRESS" />
-    <TheTimeline v-show="page === PAGE_TIMELINE" />
   </main>
 </template>
 
