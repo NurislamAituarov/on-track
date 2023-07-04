@@ -1,11 +1,6 @@
 <template>
   <li class="relative flex flex-col gap-2 border-t py-10 px-4">
-    <a
-      href="#"
-      class="absolute -top-4 left-1/2 -translate-x-1/2 rounded px-2 font-mono text-lg"
-      :class="hourLinkClasses"
-      >{{ timelineItem.hour }}:00</a
-    >
+    <TimeLineHour :timelineItem="timelineItem" />
     <BaseSelect
       :options="options"
       placeholder="Rest"
@@ -17,19 +12,15 @@
 </template>
 
 <script lang="ts" setup>
-import BaseSelect from "@/components/base/BaseSelect.vue";
-import { IOptionsItem, THourItem } from "@/types";
 import { ref } from "vue";
+import { IOptionsItem, THourItem } from "@/types";
+import BaseSelect from "@/components/base/BaseSelect.vue";
+import TimeLineHour from "./TimeLineHour.vue";
+
 interface Props {
   timelineItem: THourItem;
 }
-const props = defineProps<Props>();
-
-const hourLinkClasses = [
-  props.timelineItem.hour === new Date().getHours()
-    ? "bg-purple-900 font-black text-white"
-    : "bg-gray-100 text-gray-500",
-];
+defineProps<Props>();
 
 const options: IOptionsItem[] = [
   {
