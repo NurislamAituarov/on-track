@@ -1,7 +1,7 @@
 <template>
   <main class="main flex flex-grow flex-col">
     <TheTimeline v-show="page === PAGE_TIMELINE" />
-    <TheActivities v-show="page === PAGE_ACTIVITIES" />
+    <TheActivities v-show="page === PAGE_ACTIVITIES" :activities="activities" />
     <TheProgress v-show="page === PAGE_PROGRESS" />
   </main>
 </template>
@@ -18,4 +18,6 @@ import {
 } from "../../lib/constants";
 
 defineProps<{ page: string }>();
+
+const activities = ["Coding", "Reading", "Training"];
 </script>

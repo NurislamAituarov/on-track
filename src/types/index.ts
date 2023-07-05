@@ -13,3 +13,8 @@ export interface IOptionsItem {
   value: number;
   label: string;
 }
+
+export interface IPeriodSelectItem {
+  value: number;
+  label: string;
+}

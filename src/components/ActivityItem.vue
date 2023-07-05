@@ -11,7 +11,7 @@
         class="font-mono"
         :options="periodSelectOptions"
         placeholder="h:mm"
-        :selected="selectedActivityId"
+        :selected="secondsToComplete"
         @select="selectActivity"
         @reset-selected-item="resetSelectedItem"
       />
@@ -21,38 +21,25 @@
 
 
 <script lang="ts" setup>
+import { ref } from "vue";
+import { TrashIcon } from "@heroicons/vue/24/outline";
+
 import BaseButton from "@/components/base/BaseButton.vue";
 import BaseSelect from "@/components/base/BaseSelect.vue";
-import { TrashIcon } from "@heroicons/vue/24/outline";
+import { periodSelectOptions } from "@/lib/constants";
 
 interface Props {
   activity: string;
 }
 defineProps<Props>();
 
-import { ref } from "vue";
-
-const periodSelectOptions = [
-  {
-    value: 15,
-    label: "0:15",
-  },
-  {
-    value: 30,
-    label: "0:30",
-  },
-  {
-    value: 45,
-    label: "0:45",
-  },
-];
-const selectedActivityId = ref();
+const secondsToComplete = ref();
 
 function selectActivity(value: number) {
-  selectedActivityId.value = value;
+  secondsToComplete.value = value;
 }
 
 function resetSelectedItem() {
-  selectedActivityId.value = null;
+  secondsToComplete.value = null;
 }
 </script>

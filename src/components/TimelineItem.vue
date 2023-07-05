@@ -16,29 +16,16 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
-import { IOptionsItem, THourItem } from "@/types";
+
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import TimeLineHour from "./TimeLineHour.vue";
+import { options } from "@/lib/constants";
+import { THourItem } from "@/types";
 
 interface Props {
   timelineItem: THourItem;
 }
 const props = defineProps<Props>();
-
-const options: IOptionsItem[] = [
-  {
-    value: 1,
-    label: "Coding",
-  },
-  {
-    value: 2,
-    label: "Reading",
-  },
-  {
-    value: 3,
-    label: "Training",
-  },
-];
 
 onMounted(() => {
   if (props.timelineItem.hour === new Date().getHours()) {

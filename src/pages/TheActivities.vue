@@ -11,6 +11,11 @@
 </template>
 
 <script lang="ts" setup>
-import TimeLineActivity from "@/components/TimeLineActivity.vue";
-const activities = ["Coding", "Reading", "Training"];
+import TimeLineActivity from "@/components/ActivityItem.vue";
+
+interface Props {
+  activities: string[];
+}
+
+defineProps<Props>();
 </script>
