@@ -1,7 +1,7 @@
 <template>
   <li class="flex flex-col gap-2 p-4 text-start">
     <div class="flex items-center gap-2">
-      <BaseButton>
+      <BaseButton type="danger">
         <TrashIcon class="h-8" />
       </BaseButton>
       <span class="truncate text-xl">{{ activity }}</span>

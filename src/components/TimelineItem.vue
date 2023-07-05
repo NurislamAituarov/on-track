@@ -5,7 +5,7 @@
   >
     <TimeLineHour :timelineItem="timelineItem" />
     <BaseSelect
-      :options="options"
+      :options="activitySelectOptions"
       placeholder="Rest"
       :selected="selectedActivityId"
       @select="selectActivity"
@@ -19,11 +19,12 @@ import { onMounted, ref } from "vue";
 
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import TimeLineHour from "./TimeLineHour.vue";
-import { options } from "@/lib/constants";
-import { THourItem } from "@/types";
+// import { options } from "@/lib/constants";
+import { IOptionsItem, THourItem } from "@/types";
 
 interface Props {
   timelineItem: THourItem;
+  activitySelectOptions: IOptionsItem[];
 }
 const props = defineProps<Props>();
 
