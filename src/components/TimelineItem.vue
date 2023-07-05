@@ -5,7 +5,7 @@
   >
     <TimeLineHour :timelineItem="timelineItem" />
     <BaseSelect
-      :options="options"
+      :options="activitySelectOptions"
       placeholder="Rest"
       :selected="selectedActivityId"
       @select="selectActivity"
@@ -16,29 +16,17 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
-import { IOptionsItem, THourItem } from "@/types";
+
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import TimeLineHour from "./TimeLineHour.vue";
+// import { options } from "@/lib/constants";
+import { IOptionsItem, THourItem } from "@/types";
 
 interface Props {
   timelineItem: THourItem;
+  activitySelectOptions: IOptionsItem[];
 }
 const props = defineProps<Props>();
-
-const options: IOptionsItem[] = [
-  {
-    value: 1,
-    label: "Coding",
-  },
-  {
-    value: 2,
-    label: "Reading",
-  },
-  {
-    value: 3,
-    label: "Training",
-  },
-];
 
 onMounted(() => {
   if (props.timelineItem.hour === new Date().getHours()) {

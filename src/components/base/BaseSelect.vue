@@ -1,6 +1,6 @@
 <template>
   <div class="flex gap-2">
-    <BaseButton @click="emit('reset-selected-item')">
+    <BaseButton @click="emit('reset-selected-item')" type="neutral">
       <XMarkIcon class="h-8" />
     </BaseButton>
 
