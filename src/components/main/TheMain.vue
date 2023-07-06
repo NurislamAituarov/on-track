@@ -15,6 +15,8 @@
 </template>
 
 <script lang="ts" setup>
+import { reactive, watch } from "vue";
+
 import TheActivities from "@/pages/TheActivities.vue";
 import TheProgress from "@/pages/TheProgress.vue";
 import TheTimeline from "@/pages/TheTimeline.vue";
@@ -24,24 +26,31 @@ import {
   PAGE_ACTIVITIES,
   PAGE_PROGRESS,
 } from "../../lib/constants";
-import { generateActivitySelectOptions } from "@/lib/helper";
-import { reactive, watch } from "vue";
+import {
+  generateActivities,
+  generateActivitySelectOptions,
+  id,
+} from "@/lib/helper";
 
 defineProps<{ page: string }>();
 
-const activities = reactive(["Coding", "Reading", "Training"]);
+let activities = reactive(generateActivities());
 let activitySelectOptions = reactive(generateActivitySelectOptions(activities));
 
 watch(activities, (value) => {
   activitySelectOptions = generateActivitySelectOptions(value);
 });
 
-function deleteActivityItem(value: string) {
-  console.log(value);
-  activities.splice(activities.indexOf(value), 1);
+function deleteActivityItem(id: string) {
+  const activityItemId = activities.findIndex((el) => el.id === id);
+  activities.splice(activityItemId, 1);
 }
 
-function addActivityItem(value: string) {
-  activities.push(value);
+function addActivityItem(name: string) {
+  activities.push({
+    id: id(),
+    name,
+    secondsToComplete: 0,
+  });
 }
 </script>

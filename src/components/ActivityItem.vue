@@ -1,10 +1,13 @@
 <template>
   <li class="flex flex-col gap-2 p-4 text-start">
     <div class="flex items-center gap-2">
-      <BaseButton type="danger" @click="emit('delete-activity-items')">
+      <BaseButton
+        type="danger"
+        @click="emit('delete-activity-item', activity.id)"
+      >
         <TrashIcon class="h-8" />
       </BaseButton>
-      <span class="truncate text-xl">{{ activity }}</span>
+      <span class="truncate text-xl">{{ activity.name }}</span>
     </div>
     <div>
       <BaseSelect
@@ -29,10 +32,10 @@ import BaseSelect from "@/components/base/BaseSelect.vue";
 import { periodSelectOptions } from "@/lib/constants";
 
 interface Props {
-  activity: string;
+  activity: any;
 }
 defineProps<Props>();
-const emit = defineEmits(["delete-activity-items"]);
+const emit = defineEmits(["delete-activity-item"]);
 
 const secondsToComplete = ref();
 
