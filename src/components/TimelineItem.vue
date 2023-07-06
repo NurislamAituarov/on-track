@@ -19,7 +19,6 @@ import { onMounted, ref } from "vue";
 
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import TimeLineHour from "./TimeLineHour.vue";
-// import { options } from "@/lib/constants";
 import { IOptionsItem, THourItem } from "@/types";
 
 interface Props {

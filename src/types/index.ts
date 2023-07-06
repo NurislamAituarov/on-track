@@ -9,12 +9,13 @@ export type THourItem = {
   hour: number;
 };
 
-export interface IOptionsItem {
+export interface IPeriodSelectItem {
   value: number;
   label: string;
 }
 
-export interface IPeriodSelectItem {
-  value: number;
-  label: string;
+export interface IActivitiesItem {
+  id: string;
+  name: string;
+  secondsToComplete: number;
 }

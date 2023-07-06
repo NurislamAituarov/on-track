@@ -3,28 +3,13 @@ export const PAGE_ACTIVITIES = 'activities';
 export const PAGE_PROGRESS = 'progress';
 export const HOURS_IN_DAY = 24;
 
-import { INavItems, IOptionsItem, IPeriodSelectItem } from '@/types';
+import { INavItems, IPeriodSelectItem } from '@/types';
 import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outline';
 
 export const navItems: INavItems[] = [
   { title: PAGE_TIMELINE, id: 1, icon: ClockIcon },
   { title: PAGE_ACTIVITIES, id: 2, icon: ListBulletIcon },
   { title: PAGE_PROGRESS, id: 3, icon: ChartBarIcon },
-];
-
-export const options: IOptionsItem[] = [
-  {
-    value: 1,
-    label: 'Coding',
-  },
-  {
-    value: 2,
-    label: 'Reading',
-  },
-  {
-    value: 3,
-    label: 'Training',
-  },
 ];
 
 export const periodSelectOptions: IPeriodSelectItem[] = [
@@ -41,3 +26,5 @@ export const periodSelectOptions: IPeriodSelectItem[] = [
     label: '0:45',
   },
 ];
+
+export const SECONDS_IN_HOURS = 3600;
