@@ -7,7 +7,7 @@
     <BaseSelect
       :options="activitySelectOptions"
       placeholder="Rest"
-      :selected="selectedActivityId"
+      :selected="timelineItem.activityId"
       @select="selectActivity"
       @reset-selected-item="resetSelectedItem"
     />
@@ -19,13 +19,15 @@ import { onMounted, ref } from "vue";
 
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import TimeLineHour from "./TimeLineHour.vue";
-import { IOptionsItem, THourItem } from "@/types";
+import { IActivitiesItem, IOptionsItem, THourItem } from "@/types";
 
 interface Props {
   timelineItem: THourItem;
   activitySelectOptions: IOptionsItem[];
+  activities: IActivitiesItem[];
 }
 const props = defineProps<Props>();
+const emit = defineEmits(["select-activity"]);
 
 onMounted(() => {
   if (props.timelineItem.hour === new Date().getHours()) {
@@ -40,8 +42,11 @@ onMounted(() => {
 const refTimelineItem = ref();
 const selectedActivityId = ref();
 
-function selectActivity(value: number) {
-  selectedActivityId.value = value;
+function selectActivity(id: number | string) {
+  emit(
+    "select-activity",
+    props.activities.find((el) => el.id === id)
+  );
 }
 
 function resetSelectedItem() {

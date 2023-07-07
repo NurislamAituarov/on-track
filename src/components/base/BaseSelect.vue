@@ -40,9 +40,9 @@ import { onMounted, onUnmounted, onUpdated, ref } from "vue";
 interface Props {
   options: IOptionsItem[];
   placeholder: string;
-  selected: number | undefined;
+  selected: null | string | number | undefined;
 }
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const emit = defineEmits(["select", "reset-selected-item"]);
 const refSelectItem = ref();
@@ -64,7 +64,7 @@ function openModalSelect() {
   selectWindow.value = !selectWindow.value;
 }
 
-function selectItem(value: number) {
+function selectItem(value: number | string) {
   emit("select", value);
   selectWindow.value = false;
 }

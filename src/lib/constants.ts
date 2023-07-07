@@ -14,15 +14,15 @@ export const navItems: INavItems[] = [
 
 export const periodSelectOptions: IPeriodSelectItem[] = [
   {
-    value: 15,
+    value: 15 * 60,
     label: '0:15',
   },
   {
-    value: 30,
+    value: 30 * 60,
     label: '0:30',
   },
   {
-    value: 45,
+    value: 45 * 60,
     label: '0:45',
   },
 ];
