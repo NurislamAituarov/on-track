@@ -6,6 +6,10 @@
         :key="timelineItem.hour"
         :timeline-item="timelineItem"
         :activity-select-options="activitySelectOptions"
+        :activities="activities"
+        @select-activity="
+          $emit('select-activity', { timelineItem, activity: $event })
+        "
       />
     </ul>
   </div>
@@ -13,13 +17,13 @@
 
 <script lang="ts" setup>
 import TimelineItem from "@/components/TimelineItem.vue";
-import { generateTimelineItems } from "@/lib/helper";
-import { IOptionsItem, THourItem } from "@/types";
+import { IActivitiesItem, IOptionsItem, THourItem } from "@/types";
 interface Props {
   activitySelectOptions: IOptionsItem[];
+  activities: IActivitiesItem[];
+  timelineItems: THourItem[];
 }
 
 defineProps<Props>();
-
-const timelineItems: THourItem[] = generateTimelineItems();
+defineEmits(["select-activity"]);
 </script>

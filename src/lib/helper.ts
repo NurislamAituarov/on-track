@@ -15,7 +15,7 @@ export function generateTimelineItems() {
   const timelineItems: THourItem[] = [];
 
   for (let i = 0; i < HOURS_IN_DAY; i++) {
-    timelineItems.push({ hour: i });
+    timelineItems.push({ hour: i, activityId: null });
   }
   return timelineItems;
 }
@@ -33,21 +33,9 @@ export function id() {
 }
 
 export function generateActivities(): IActivitiesItem[] {
-  return [
-    {
-      id: id(),
-      name: 'Coding',
-      secondsToComplete: 0 * SECONDS_IN_HOURS,
-    },
-    {
-      id: id(),
-      name: 'Reading',
-      secondsToComplete: 1 * SECONDS_IN_HOURS,
-    },
-    {
-      id: id(),
-      name: 'Training',
-      secondsToComplete: 2 * SECONDS_IN_HOURS,
-    },
-  ];
+  return ['Coding', 'Reading', 'Training'].map((el, i) => ({
+    id: id(),
+    name: el,
+    secondsToComplete: i * SECONDS_IN_HOURS,
+  }));
 }
