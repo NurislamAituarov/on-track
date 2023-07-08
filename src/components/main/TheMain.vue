@@ -39,13 +39,20 @@ import { ISelectActivity, THourItem } from "@/types";
 
 defineProps<{ page: string }>();
 
+// Обьявление state
 let activities = reactive(generateActivities());
 let activitySelectOptions = computed(() =>
   generateActivitySelectOptions(activities)
 );
 let timelineItems: THourItem[] = reactive(generateTimelineItems());
 
+//  Методы для управлении состоянием активности
 function deleteActivityItem(id: string) {
+  timelineItems.forEach((el) => {
+    if (el.activityId === id) {
+      el.activityId = null;
+    }
+  });
   const activityItemId = activities.findIndex((el) => el.id === id);
   activities.splice(activityItemId, 1);
 }
@@ -59,6 +66,6 @@ function addActivityItem(name: string) {
 }
 
 function selectActivity({ timelineItem, activity }: ISelectActivity) {
-  timelineItem.activityId = activity.id;
+  timelineItem.activityId = activity?.id || null;
 }
 </script>
