@@ -30,9 +30,10 @@ import { TrashIcon } from "@heroicons/vue/24/outline";
 import BaseButton from "@/components/base/BaseButton.vue";
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import { periodSelectOptions } from "@/lib/constants";
+import { IActivitiesItem } from "@/types";
 
 interface Props {
-  activity: any;
+  activity: IActivitiesItem;
 }
 defineProps<Props>();
 const emit = defineEmits(["delete-activity-item"]);

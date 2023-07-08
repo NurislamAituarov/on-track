@@ -28,5 +28,5 @@ export interface IActivitiesItem {
 
 export interface ISelectActivity {
   timelineItem: THourItem;
-  activity: IActivitiesItem;
+  activity: IActivitiesItem | null;
 }

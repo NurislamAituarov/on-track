@@ -9,7 +9,7 @@
       placeholder="Rest"
       :selected="timelineItem.activityId"
       @select="selectActivity"
-      @reset-selected-item="resetSelectedItem"
+      @reset-selected-item="selectActivity"
     />
   </li>
 </template>
@@ -27,7 +27,7 @@ interface Props {
   activities: IActivitiesItem[];
 }
 const props = defineProps<Props>();
-const emit = defineEmits(["select-activity"]);
+const emit = defineEmits(["select-activity", "reset-selected-item"]);
 
 onMounted(() => {
   if (props.timelineItem.hour === new Date().getHours()) {
@@ -40,17 +40,9 @@ onMounted(() => {
 });
 
 const refTimelineItem = ref();
-const selectedActivityId = ref();
 
 function selectActivity(id: number | string) {
-  emit(
-    "select-activity",
-    props.activities.find((el) => el.id === id)
-  );
-}
-
-function resetSelectedItem() {
-  selectedActivityId.value = null;
+  emit("select-activity", props.activities.find((el) => el.id === id) || null);
 }
 </script>
 
