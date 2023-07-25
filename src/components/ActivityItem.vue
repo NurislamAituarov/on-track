@@ -13,10 +13,10 @@
       <BaseSelect
         class="font-mono"
         :options="periodSelectOptions"
-        placeholder="h:mm"
-        :selected="secondsToComplete"
-        @select="selectActivity"
-        @reset-selected-item="resetSelectedItem"
+        placeholder="hh:mm"
+        :selected="activity.secondsToComplete"
+        @select="selectTimeActivity"
+        @reset-selected-item="resetTimeActivity"
       />
     </div>
   </li>
@@ -24,7 +24,6 @@
 
 
 <script lang="ts" setup>
-import { ref } from "vue";
 import { TrashIcon } from "@heroicons/vue/24/outline";
 
 import BaseButton from "@/components/base/BaseButton.vue";
@@ -36,15 +35,13 @@ interface Props {
   activity: IActivitiesItem;
 }
 defineProps<Props>();
-const emit = defineEmits(["delete-activity-item"]);
+const emit = defineEmits(["delete-activity-item", "select-time-activity"]);
 
-const secondsToComplete = ref();
-
-function selectActivity(value: number) {
-  secondsToComplete.value = value;
+function selectTimeActivity(value: number) {
+  emit("select-time-activity", value);
 }
 
-function resetSelectedItem() {
-  secondsToComplete.value = null;
+function resetTimeActivity() {
+  emit("select-time-activity", null);
 }
 </script>

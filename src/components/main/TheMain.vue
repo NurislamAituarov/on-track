@@ -12,6 +12,7 @@
       :activities="activities"
       @delete-activity-item="deleteActivityItem"
       @add-activity-item="addActivityItem"
+      @select-time-activity="selectTimeActivity"
     />
     <TheProgress v-show="page === PAGE_PROGRESS" />
   </main>
@@ -35,7 +36,7 @@ import {
   generateTimelineItems,
   id,
 } from "@/lib/helper";
-import { ISelectActivity, THourItem } from "@/types";
+import { ISelectActivity, ISelectTimeActivity, THourItem } from "@/types";
 
 defineProps<{ page: string }>();
 
@@ -44,13 +45,14 @@ let activities = reactive(generateActivities());
 let activitySelectOptions = computed(() =>
   generateActivitySelectOptions(activities)
 );
-let timelineItems: THourItem[] = reactive(generateTimelineItems());
+let timelineItems: THourItem[] = reactive(generateTimelineItems(activities));
 
 //  Методы для управлении состоянием активности
 function deleteActivityItem(id: string) {
   timelineItems.forEach((el) => {
     if (el.activityId === id) {
       el.activityId = null;
+      el.activitySeconds = 0;
     }
   });
   const activityItemId = activities.findIndex((el) => el.id === id);
@@ -67,5 +69,10 @@ function addActivityItem(name: string) {
 
 function selectActivity({ timelineItem, activity }: ISelectActivity) {
   timelineItem.activityId = activity?.id || null;
+  timelineItem.activitySeconds = activity?.secondsToComplete ?? 0;
+}
+
+function selectTimeActivity({ activity, value }: ISelectTimeActivity) {
+  activity.secondsToComplete = value;
 }
 </script>

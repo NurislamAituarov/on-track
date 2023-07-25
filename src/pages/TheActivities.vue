@@ -10,6 +10,9 @@
         :key="activity.id"
         :activity="activity"
         @delete-activity-item="emit('delete-activity-item', $event)"
+        @select-time-activity="
+          emit('select-time-activity', { activity, value: $event })
+        "
       />
     </ul>
 
@@ -31,7 +34,11 @@ interface Props {
 }
 
 defineProps<Props>();
-const emit = defineEmits(["delete-activity-item", "add-activity-item"]);
+const emit = defineEmits([
+  "delete-activity-item",
+  "add-activity-item",
+  "select-time-activity",
+]);
 
 const refContainerActivities = ref();
 

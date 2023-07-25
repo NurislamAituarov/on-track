@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 interface Props {
-  type: "neutral" | "danger" | "primary";
+  type: "neutral" | "danger" | "primary" | "success" | "warning";
 }
 defineProps<Props>();
 
@@ -18,5 +18,7 @@ const typeClasses = {
   neutral: "bg-gray-100 enabled:hover:bg-gray-200",
   danger: "bg-red-500 enabled:hover:bg-red-600 text-white",
   primary: "bg-purple-500 enabled:hover:bg-purple-600 text-white",
+  success: "bg-green-500 enabled:hover:bg-green-600 text-white",
+  warning: "bg-yellow-500 enabled:hover:bg-yellow-600 text-white",
 };
 </script>
