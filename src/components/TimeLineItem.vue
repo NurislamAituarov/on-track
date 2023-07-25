@@ -11,6 +11,7 @@
       @select="selectActivity"
       @reset-selected-item="selectActivity"
     />
+    <TimeLineStopWatch :seconds="timelineItem.activitySeconds" />
   </li>
 </template>
 
@@ -19,6 +20,7 @@ import { onMounted, ref } from "vue";
 
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import TimeLineHour from "./TimeLineHour.vue";
+import TimeLineStopWatch from "./TimeLineStopWatch.vue";
 import { IActivitiesItem, IOptionsItem, THourItem } from "@/types";
 
 interface Props {

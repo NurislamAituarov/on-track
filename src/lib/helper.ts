@@ -1,5 +1,11 @@
 import { IActivitiesItem, INavItems, THourItem } from '@/types';
-import { HOURS_IN_DAY, PAGE_TIMELINE, SECONDS_IN_HOURS } from '../lib/constants';
+import {
+  HOURS_IN_DAY,
+  MINUTES_IN_HOUR,
+  PAGE_TIMELINE,
+  SECONDS_IN_HOUR,
+  MILlISECONDS_IN_SECONDS,
+} from '../lib/constants';
 
 export function normalizeHash(navItems: INavItems[]): string {
   const hash = window.location.hash.slice(1);
@@ -11,11 +17,15 @@ export function normalizeHash(navItems: INavItems[]): string {
   return PAGE_TIMELINE;
 }
 
-export function generateTimelineItems() {
+export function generateTimelineItems(activities: IActivitiesItem[]) {
   const timelineItems: THourItem[] = [];
 
-  for (let i = 0; i < HOURS_IN_DAY; i++) {
-    timelineItems.push({ hour: i, activityId: null });
+  for (let hour = 0; hour < HOURS_IN_DAY; hour++) {
+    timelineItems.push({
+      hour,
+      activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
+      activitySeconds: hour % 4 === 0 ? 0 : (15 * MINUTES_IN_HOUR * hour) % SECONDS_IN_HOUR,
+    });
   }
   return timelineItems;
 }
@@ -36,6 +46,35 @@ export function generateActivities(): IActivitiesItem[] {
   return ['Coding', 'Reading', 'Training'].map((el, i) => ({
     id: id(),
     name: el,
-    secondsToComplete: i * SECONDS_IN_HOURS,
+    secondsToComplete: i * SECONDS_IN_HOUR,
   }));
+}
+
+export function generatePeriodSelectOptions(periodsInMinutes: number[]) {
+  return periodsInMinutes.map((period) => {
+    return {
+      value: period * SECONDS_IN_HOUR,
+      label: generatePeriodSelectOptionsLabel(period),
+    };
+  });
+}
+
+function generatePeriodSelectOptionsLabel(period: number) {
+  const hours = Math.floor(period / MINUTES_IN_HOUR)
+    .toString()
+    .padStart(2, '0');
+
+  const minutes = (period % MINUTES_IN_HOUR).toString().padStart(2, '0');
+
+  return `${hours}:${minutes}`;
+}
+
+export function formatSeconds(seconds: number) {
+  const date = new Date();
+
+  date.setTime(Math.abs(seconds) * MILlISECONDS_IN_SECONDS);
+
+  const utc = date.toUTCString();
+
+  return utc.substring(utc.indexOf(':') - 2, utc.indexOf(':') + 6);
 }

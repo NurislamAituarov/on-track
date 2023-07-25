@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import TimelineItem from "@/components/TimelineItem.vue";
+import TimelineItem from "@/components/TimeLineItem.vue";
 import { IActivitiesItem, IOptionsItem, THourItem } from "@/types";
 interface Props {
   activitySelectOptions: IOptionsItem[];

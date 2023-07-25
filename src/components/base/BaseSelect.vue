@@ -16,7 +16,10 @@
         <ChevronDownIcon class="h-5" :class="{ 'rotate-180': selectWindow }" />
       </div>
 
-      <ul class="wrapper__select-item" v-if="selectWindow">
+      <ul
+        class="wrapper__select-item max-h-80 overflow-y-scroll"
+        v-if="selectWindow"
+      >
         <li
           class="option"
           :style="[value === selected ? 'background: rgb(245, 245, 245)' : '']"

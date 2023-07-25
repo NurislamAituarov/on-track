@@ -8,6 +8,7 @@ export interface INavItems {
 export type THourItem = {
   hour: number;
   activityId: null | string | number;
+  activitySeconds: number;
 };
 
 export interface IOptionsItem {
@@ -23,10 +24,15 @@ export interface IPeriodSelectItem {
 export interface IActivitiesItem {
   id: string;
   name: string;
-  secondsToComplete: number;
+  secondsToComplete: number | null;
 }
 
 export interface ISelectActivity {
   timelineItem: THourItem;
   activity: IActivitiesItem | null;
+}
+
+export interface ISelectTimeActivity {
+  activity: IActivitiesItem;
+  value: number | null;
 }
