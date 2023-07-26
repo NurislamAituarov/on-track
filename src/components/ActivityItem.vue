@@ -20,8 +20,8 @@
       />
 
       <ActivitySecondsToComplete
-        v-if="activity.secondsToComplete"
         :activity="activity"
+        :timeline-items="timelineItems"
       />
     </div>
   </li>
@@ -35,10 +35,11 @@ import BaseButton from "@/components/base/BaseButton.vue";
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import ActivitySecondsToComplete from "@/components/ActivitySecondsToComplete.vue";
 import { periodSelectOptions } from "@/lib/constants";
-import { IActivitiesItem } from "@/types";
+import { IActivitiesItem, THourItem } from "@/types";
 
 interface Props {
   activity: IActivitiesItem;
+  timelineItems: THourItem[];
 }
 defineProps<Props>();
 const emit = defineEmits(["delete-activity-item", "select-time-activity"]);

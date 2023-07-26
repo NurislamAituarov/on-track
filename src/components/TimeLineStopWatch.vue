@@ -26,32 +26,45 @@
 import { ArrowPathIcon, PauseIcon, PlayIcon } from "@heroicons/vue/24/outline";
 import BaseButton from "./base/BaseButton.vue";
 import { formatSeconds } from "@/lib/helper";
-import { computed, ref } from "vue";
+import { computed, inject, ref } from "vue";
 import { MILlISECONDS_IN_SECONDS } from "@/lib/constants";
+import { THourItem } from "@/types";
 
 interface Props {
-  seconds: number;
-  hour: number;
+  timelineItem: THourItem;
 }
+type UpdateTimelineItemActivityFunction = (
+  timelineItem: THourItem,
+  second: number
+) => void;
+
 const props = defineProps<Props>();
 
-const seconds = ref(props.seconds);
+const updateTimelineItemActivitySeconds = inject(
+  "update-timeline-item-activity"
+) as UpdateTimelineItemActivityFunction;
+
+const seconds = ref(props.timelineItem.activitySeconds);
 const isRunning = ref<boolean | number>(false);
 
 const formattedSeconds = computed(() => {
   return formatSeconds(seconds.value);
 });
 
-const isStartButtonDisabled = props.hour !== new Date().getHours();
+const isStartButtonDisabled = props.timelineItem.hour !== new Date().getHours();
 
 function start() {
   isRunning.value = setInterval(() => {
+    updateTimelineItemActivitySeconds(props.timelineItem, 1);
+
     seconds.value++;
   }, MILlISECONDS_IN_SECONDS);
 }
 
 function stop() {
   if (typeof isRunning.value === "number") {
+    updateTimelineItemActivitySeconds(props.timelineItem, -seconds.value);
+
     clearInterval(isRunning.value);
     isRunning.value = false;
   }

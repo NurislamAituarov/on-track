@@ -11,6 +11,7 @@
     <TheActivities
       v-show="page === PAGE_ACTIVITIES"
       :activities="activities"
+      :timelineItems="timelineItems"
       @delete-activity-item="deleteActivityItem"
       @add-activity-item="addActivityItem"
       @select-time-activity="selectTimeActivity"
@@ -20,12 +21,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive } from "vue";
-
+import { computed, provide, reactive } from "vue";
 import TheActivities from "@/pages/TheActivities.vue";
 import TheProgress from "@/pages/TheProgress.vue";
 import TheTimeline from "@/pages/TheTimeline.vue";
-
 import {
   PAGE_TIMELINE,
   PAGE_ACTIVITIES,
@@ -40,7 +39,7 @@ import {
 import { ISelectActivity, ISelectTimeActivity, THourItem } from "@/types";
 
 defineProps<{ page: string }>();
-
+provide("update-timeline-item-activity", updateTimelineItemActivitySeconds);
 // Обьявление state
 let activities = reactive(generateActivities());
 let activitySelectOptions = computed(() =>
@@ -74,5 +73,12 @@ function selectActivity({ timelineItem, activity }: ISelectActivity) {
 
 function selectTimeActivity({ activity, value }: ISelectTimeActivity) {
   activity.secondsToComplete = value;
+}
+
+function updateTimelineItemActivitySeconds(
+  timelineItem: THourItem,
+  second: number
+) {
+  timelineItem.activitySeconds += second;
 }
 </script>

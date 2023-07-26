@@ -92,3 +92,11 @@ export function scrollToCurrentTimeLineItem(el: HTMLLIElement | null, isSmooth =
     });
   }
 }
+
+export function getTotalActivitySeconds(activity: IActivitiesItem, timelineItems: THourItem[]) {
+  return timelineItems
+    .filter((item) => item.activityId === activity.id)
+    .reduce((total, item) => {
+      return Math.round(item.activitySeconds + total);
+    }, 0);
+}
