@@ -9,6 +9,7 @@
         v-for="activity of activities"
         :key="activity.id"
         :activity="activity"
+        :timeline-items="timelineItems"
         @delete-activity-item="emit('delete-activity-item', $event)"
         @select-time-activity="
           emit('select-time-activity', { activity, value: $event })
@@ -27,10 +28,11 @@ import { ref } from "vue";
 import ActivityItem from "@/components/ActivityItem.vue";
 import TheActivityForm from "@/components/TheActivityForm.vue";
 import TheActivitiesEmptyState from "@/components/TheActivitiesEmptyState.vue";
-import { IActivitiesItem } from "@/types";
+import { IActivitiesItem, THourItem } from "@/types";
 
 interface Props {
   activities: IActivitiesItem[];
+  timelineItems: THourItem[];
 }
 
 defineProps<Props>();

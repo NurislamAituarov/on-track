@@ -14,10 +14,7 @@
       @select="selectActivity"
       @reset-selected-item="selectActivity"
     />
-    <TimeLineStopWatch
-      :seconds="timelineItem.activitySeconds"
-      :hour="timelineItem.hour"
-    />
+    <TimeLineStopWatch :timeline-item="timelineItem" />
   </li>
 </template>
 
