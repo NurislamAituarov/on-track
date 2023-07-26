@@ -20,7 +20,7 @@ import TheNav from "@/components/nav/TheNav.vue";
 import TheHeader from "@/components/header/TheHeader.vue";
 
 import { normalizeHash } from "@/lib/helper";
-import { navItems } from "@/lib/constants";
+import { PAGE_ACTIVITIES, navItems } from "@/lib/constants";
 //////////////////////////////////////////////////////////////////
 
 // взять из url имя странаицы
@@ -29,5 +29,9 @@ const currentPage = ref(normalizeHash(navItems));
 // Открыть новую страницу
 function goTo(page: string) {
   currentPage.value = page;
+
+  if (page === PAGE_ACTIVITIES) {
+    document.body.scrollIntoView();
+  }
 }
 </script>

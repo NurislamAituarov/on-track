@@ -5,6 +5,7 @@
       :activity-select-options="activitySelectOptions"
       :activities="activities"
       :timelineItems="timelineItems"
+      :page="page"
       @select-activity="selectActivity"
     />
     <TheActivities
@@ -69,7 +70,6 @@ function addActivityItem(name: string) {
 
 function selectActivity({ timelineItem, activity }: ISelectActivity) {
   timelineItem.activityId = activity?.id || null;
-  timelineItem.activitySeconds = activity?.secondsToComplete ?? 0;
 }
 
 function selectTimeActivity({ activity, value }: ISelectTimeActivity) {

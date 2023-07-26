@@ -1,11 +1,12 @@
 import { IActivitiesItem, INavItems, THourItem } from '@/types';
 import {
   HOURS_IN_DAY,
+  MILlISECONDS_IN_SECONDS,
   MINUTES_IN_HOUR,
   PAGE_TIMELINE,
   SECONDS_IN_HOUR,
-  MILlISECONDS_IN_SECONDS,
-} from '../lib/constants';
+  SECONDS_IN_MINUTE,
+} from './constants';
 
 export function normalizeHash(navItems: INavItems[]): string {
   const hash = window.location.hash.slice(1);
@@ -23,8 +24,10 @@ export function generateTimelineItems(activities: IActivitiesItem[]) {
   for (let hour = 0; hour < HOURS_IN_DAY; hour++) {
     timelineItems.push({
       hour,
-      activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
-      activitySeconds: hour % 4 === 0 ? 0 : (15 * MINUTES_IN_HOUR * hour) % SECONDS_IN_HOUR,
+      activityId: [0, 1, 2, 3, 4].includes(hour) ? activities[hour % 3].id : null,
+      activitySeconds: [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0,
+      // activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
+      // activitySeconds: hour % 4 === 0 ? 0 : (15 * MINUTES_IN_HOUR * hour) % SECONDS_IN_HOUR,
     });
   }
   return timelineItems;
@@ -53,7 +56,7 @@ export function generateActivities(): IActivitiesItem[] {
 export function generatePeriodSelectOptions(periodsInMinutes: number[]) {
   return periodsInMinutes.map((period) => {
     return {
-      value: period * SECONDS_IN_HOUR,
+      value: period * SECONDS_IN_MINUTE,
       label: generatePeriodSelectOptionsLabel(period),
     };
   });
@@ -71,10 +74,21 @@ function generatePeriodSelectOptionsLabel(period: number) {
 
 export function formatSeconds(seconds: number) {
   const date = new Date();
-
   date.setTime(Math.abs(seconds) * MILlISECONDS_IN_SECONDS);
-
   const utc = date.toUTCString();
-
   return utc.substring(utc.indexOf(':') - 2, utc.indexOf(':') + 6);
+}
+
+export function scrollToCurrentTimeLineItem(el: HTMLLIElement | null, isSmooth = false) {
+  if (el) {
+    // el.scrollIntoView({
+    //   block: 'center',
+    //   behavior: 'smooth',
+    // });
+    const height = el.offsetTop;
+    window.scrollTo({
+      top: height - 100,
+      behavior: 'smooth',
+    });
+  }
 }
