@@ -7,6 +7,7 @@
         :timeline-item="timelineItem"
         :activity-select-options="activitySelectOptions"
         :activities="activities"
+        :page="page"
         @select-activity="
           $emit('select-activity', { timelineItem, activity: $event })
         "
@@ -22,6 +23,7 @@ interface Props {
   activitySelectOptions: IOptionsItem[];
   activities: IActivitiesItem[];
   timelineItems: THourItem[];
+  page: string;
 }
 
 defineProps<Props>();
