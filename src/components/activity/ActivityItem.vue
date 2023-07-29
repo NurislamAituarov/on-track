@@ -27,7 +27,7 @@ import { TrashIcon } from "@heroicons/vue/24/outline";
 
 import BaseButton from "@/components/base/BaseButton.vue";
 import BaseSelect from "@/components/base/BaseSelect.vue";
-import ActivitySecondsToComplete from "@/components/ActivitySecondsToComplete.vue";
+import ActivitySecondsToComplete from "./ActivitySecondsToComplete.vue";
 import { periodSelectOptions } from "@/lib/constants";
 import { IActivitiesItem } from "@/types";
 import { inject } from "vue";

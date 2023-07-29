@@ -15,6 +15,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+
 import TheMain from "@/components/main/TheMain.vue";
 import TheNav from "@/components/nav/TheNav.vue";
 import TheHeader from "@/components/header/TheHeader.vue";
@@ -25,6 +26,7 @@ import { PAGE_ACTIVITIES, navItems } from "@/lib/constants";
 
 // взять из url имя странаицы
 const currentPage = ref(normalizeHash(navItems));
+const wrapperRef = ref();
 
 // Открыть новую страницу
 function goTo(page: string) {
@@ -35,3 +37,7 @@ function goTo(page: string) {
   }
 }
 </script>
+
+
+<style scoped>
+</style>

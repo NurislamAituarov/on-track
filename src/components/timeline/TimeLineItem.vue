@@ -60,14 +60,6 @@ watchPostEffect(async () => {
 async function scrollToHour() {
   scrollToCurrentTimeLineItem(refTimelineItem.value, true);
 }
-
-// watch(props, (value) => {
-//   if (
-//     value.page === PAGE_TIMELINE &&
-//     props.timelineItem.hour === new Date().getHours()
-//   )
-//     scrollToCurrentTimeLineItem(props.timelineItem.hour, refTimelineItem.value);
-// });
 </script>
 
 

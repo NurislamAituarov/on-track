@@ -81,14 +81,9 @@ export function formatSeconds(seconds: number) {
 
 export function scrollToCurrentTimeLineItem(el: HTMLLIElement | null, isSmooth = false) {
   if (el) {
-    // el.scrollIntoView({
-    //   block: 'center',
-    //   behavior: 'smooth',
-    // });
-    const height = el.offsetTop;
-    window.scrollTo({
-      top: height - 100,
-      behavior: 'smooth',
+    el.scrollIntoView({
+      block: 'center',
+      behavior: isSmooth ? 'smooth' : undefined,
     });
   }
 }
