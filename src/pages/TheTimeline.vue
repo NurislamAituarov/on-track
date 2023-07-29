@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import TimelineItem from "@/components/TimeLineItem.vue";
+import TimelineItem from "@/components/timeline/TimeLineItem.vue";
 import { THourItem } from "@/types";
 interface Props {
   timelineItems: THourItem[];

@@ -6,7 +6,7 @@ import { activities } from './activities';
 export const timelineItems: THourItem[] = reactive(generateTimelineItems(activities));
 
 export function updateTimelineItemActivitySeconds(timelineItem: THourItem, second: number) {
-  timelineItem.activitySeconds += second;
+  timelineItem.activitySeconds = second;
 }
 
 export function selectActivity(timelineItem: THourItem, activityId: number) {

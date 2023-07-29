@@ -24,9 +24,9 @@
 
 <script lang="ts" setup>
 import { ArrowPathIcon, PauseIcon, PlayIcon } from "@heroicons/vue/24/outline";
-import BaseButton from "./base/BaseButton.vue";
+import BaseButton from "../base/BaseButton.vue";
 import { formatSeconds } from "@/lib/helper";
-import { computed, inject, ref } from "vue";
+import { computed, inject, ref, watch } from "vue";
 import { MILlISECONDS_IN_SECONDS } from "@/lib/constants";
 import { THourItem } from "@/types";
 
@@ -53,9 +53,19 @@ const formattedSeconds = computed(() => {
 
 const isStartButtonDisabled = props.timelineItem.hour !== new Date().getHours();
 
+watch(
+  () => props.timelineItem.activityId,
+  () => {
+    updateTimelineItemActivitySeconds(props.timelineItem, seconds.value);
+  }
+);
+
 function start() {
   isRunning.value = setInterval(() => {
-    updateTimelineItemActivitySeconds(props.timelineItem, 1);
+    updateTimelineItemActivitySeconds(
+      props.timelineItem,
+      props.timelineItem.activitySeconds + 1
+    );
 
     seconds.value++;
   }, MILlISECONDS_IN_SECONDS);
@@ -70,7 +80,10 @@ function stop() {
 
 function reset() {
   stop();
-  updateTimelineItemActivitySeconds(props.timelineItem, -seconds.value);
+  updateTimelineItemActivitySeconds(
+    props.timelineItem,
+    props.timelineItem.activitySeconds - seconds.value
+  );
   seconds.value = 0;
 }
 </script>

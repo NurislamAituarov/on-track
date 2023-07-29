@@ -20,9 +20,6 @@
 import { inject, ref } from "vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 import { PlusIcon } from "@heroicons/vue/24/outline";
-// interface Props {}
-
-// defineProps<Props>();
 
 const createActivityItem = inject("create-activity-item") as (
   value: string

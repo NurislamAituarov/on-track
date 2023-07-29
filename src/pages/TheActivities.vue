@@ -20,9 +20,9 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import ActivityItem from "@/components/ActivityItem.vue";
-import TheActivityForm from "@/components/TheActivityForm.vue";
-import TheActivitiesEmptyState from "@/components/TheActivitiesEmptyState.vue";
+import ActivityItem from "@/components/activity/ActivityItem.vue";
+import TheActivityForm from "@/components/timeline/TheActivityForm.vue";
+import TheActivitiesEmptyState from "@/components/activity/TheActivitiesEmptyState.vue";
 import { IActivitiesItem } from "@/types";
 
 interface Props {
