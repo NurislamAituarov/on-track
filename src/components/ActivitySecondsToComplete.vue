@@ -9,18 +9,18 @@
 import { SECONDS_IN_MINUTE } from "@/lib/constants";
 import { formatSeconds, getTotalActivitySeconds } from "@/lib/helper";
 import { IActivitiesItem, THourItem } from "@/types";
-import { computed } from "vue";
+import { computed, inject } from "vue";
 
 interface Props {
   activity: IActivitiesItem;
-  timelineItems: THourItem[];
 }
 
 const props = defineProps<Props>();
+const timelineItems = inject("timeline-items") as THourItem[];
 
 const secondsDiff = computed(() => {
   return props.activity.secondsToComplete
-    ? getTotalActivitySeconds(props.activity, props.timelineItems) -
+    ? getTotalActivitySeconds(props.activity, timelineItems) -
         props.activity.secondsToComplete
     : 0;
 });
@@ -34,7 +34,7 @@ const sign = computed(() => {
 });
 
 const classes = computed(() => {
-  return `flex items-center rounded bg-purple-100 px-2 font-mono text-xl text-purple-600 ${colorClasses.value}`;
+  return `flex items-center rounded px-2 font-mono text-xl ${colorClasses.value}`;
 });
 
 const colorClasses = computed(() => {

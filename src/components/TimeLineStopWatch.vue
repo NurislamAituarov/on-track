@@ -63,8 +63,6 @@ function start() {
 
 function stop() {
   if (typeof isRunning.value === "number") {
-    updateTimelineItemActivitySeconds(props.timelineItem, -seconds.value);
-
     clearInterval(isRunning.value);
     isRunning.value = false;
   }
@@ -72,6 +70,7 @@ function stop() {
 
 function reset() {
   stop();
+  updateTimelineItemActivitySeconds(props.timelineItem, -seconds.value);
   seconds.value = 0;
 }
 </script>
