@@ -1,6 +1,6 @@
 <template>
   <form
-    @submit.prevent="addActivity"
+    @submit.prevent="submit"
     class="sticky bottom-[67px] flex gap-2 border-t bg-white p-4"
   >
     <input
@@ -17,22 +17,27 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { inject, ref } from "vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 import { PlusIcon } from "@heroicons/vue/24/outline";
 // interface Props {}
 
 // defineProps<Props>();
 
-const emit = defineEmits(["submit"]);
-
+const createActivityItem = inject("create-activity-item") as (
+  value: string
+) => void;
 const nameActivity = ref("");
 const refValue = ref();
 
-function addActivity() {
+function submit() {
   if (!nameActivity.value) return refValue.value.focus();
+  createActivityItem(nameActivity.value);
 
-  emit("submit", nameActivity.value);
+  document.body.scrollIntoView({
+    block: "end",
+    behavior: "smooth",
+  });
   nameActivity.value = "";
 }
 </script>

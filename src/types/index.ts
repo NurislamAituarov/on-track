@@ -26,13 +26,3 @@ export interface IActivitiesItem {
   name: string;
   secondsToComplete: number | null;
 }
-
-export interface ISelectActivity {
-  timelineItem: THourItem;
-  activity: IActivitiesItem | null;
-}
-
-export interface ISelectTimeActivity {
-  activity: IActivitiesItem;
-  value: number | null;
-}

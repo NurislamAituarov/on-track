@@ -45,7 +45,7 @@ interface Props {
   placeholder: string;
   selected: null | string | number | undefined;
 }
-const props = defineProps<Props>();
+defineProps<Props>();
 
 const emit = defineEmits(["select", "reset-selected-item"]);
 const refSelectItem = ref();
