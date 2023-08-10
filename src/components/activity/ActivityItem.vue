@@ -12,8 +12,7 @@
         :options="periodSelectOptions"
         placeholder="hh:mm"
         :selected="activity.secondsToComplete"
-        @select="selectTimeActivity(activity, $event)"
-        @reset-selected-item="selectTimeActivity(activity, $event)"
+        @select="updateTimeActivity(activity, $event)"
       />
 
       <ActivitySecondsToComplete :activity="activity" />
@@ -23,6 +22,7 @@
 
 
 <script lang="ts" setup>
+import { inject } from "vue";
 import { TrashIcon } from "@heroicons/vue/24/outline";
 
 import BaseButton from "@/components/base/BaseButton.vue";
@@ -30,13 +30,12 @@ import BaseSelect from "@/components/base/BaseSelect.vue";
 import ActivitySecondsToComplete from "./ActivitySecondsToComplete.vue";
 import { periodSelectOptions } from "@/lib/constants";
 import { IActivitiesItem } from "@/types";
-import { inject } from "vue";
 
 interface Props {
   activity: IActivitiesItem;
 }
 defineProps<Props>();
-const selectTimeActivity = inject("select-time-activity") as (
+const updateTimeActivity = inject("update-time-activity") as (
   activity: IActivitiesItem,
   value: number
 ) => void;

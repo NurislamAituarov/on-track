@@ -25,6 +25,6 @@ export function deleteActivityItem(id: string) {
   activities.splice(activityItemId, 1);
 }
 
-export function selectTimeActivity(activity: IActivitiesItem, value: number) {
+export function updateTimeActivity(activity: IActivitiesItem, value: number) {
   activity.secondsToComplete = value || 0;
 }
