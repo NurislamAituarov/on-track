@@ -1,6 +1,6 @@
 <template>
   <div class="flex gap-2">
-    <BaseButton @click="emit('reset-selected-item')" type="neutral">
+    <BaseButton @click="emit('select')" type="neutral">
       <XMarkIcon class="h-8" />
     </BaseButton>
 
@@ -47,7 +47,7 @@ interface Props {
 }
 defineProps<Props>();
 
-const emit = defineEmits(["select", "reset-selected-item"]);
+const emit = defineEmits(["select"]);
 const refSelectItem = ref();
 const selectWindow = ref(false);
 

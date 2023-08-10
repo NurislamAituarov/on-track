@@ -31,7 +31,7 @@ import {
   activitySelectOptions,
   createActivityItem,
   deleteActivityItem,
-  selectTimeActivity,
+  updateTimeActivity,
 } from "@/module/activities";
 
 defineProps<{ page: string }>();
@@ -42,7 +42,7 @@ provide("timeline-items", timelineItems);
 provide("activities", activities);
 provide("activity-select-options", activitySelectOptions);
 provide("select-activity", selectActivity);
-provide("select-time-activity", selectTimeActivity);
+provide("update-time-activity", updateTimeActivity);
 provide("create-activity-item", createActivityItem);
 provide("delete-activity-item", deleteActivityItem);
 </script>
