@@ -11,7 +11,7 @@
       placeholder="Activity name"
     />
     <BaseButton type="primary">
-      <PlusIcon class="h-8" />
+      <BaseIcon name="Plus" class="h-8" />
     </BaseButton>
   </form>
 </template>
@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import { inject, ref } from "vue";
 import BaseButton from "@/components/base/BaseButton.vue";
-import { PlusIcon } from "@heroicons/vue/24/outline";
+import BaseIcon from "../base/BaseIcon.vue";
 
 const createActivityItem = inject("create-activity-item") as (
   value: string

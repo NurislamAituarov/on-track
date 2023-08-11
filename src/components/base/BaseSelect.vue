@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-2">
     <BaseButton @click="emit('select')" type="neutral">
-      <XMarkIcon class="h-8" />
+      <BaseIcon name="XMark" class="h-8" />
     </BaseButton>
 
     <div
@@ -13,7 +13,11 @@
         @click="openModalSelect"
       >
         {{ options.find((el) => el.value === selected)?.label || placeholder }}
-        <ChevronDownIcon class="h-5" :class="{ 'rotate-180': selectWindow }" />
+        <BaseIcon
+          name="ChevronDown"
+          class="h-5"
+          :class="{ 'rotate-180': selectWindow }"
+        />
       </div>
 
       <ul
@@ -36,9 +40,9 @@
 
 <script lang="ts" setup>
 import { IOptionsItem } from "@/types";
-import { XMarkIcon, ChevronDownIcon } from "@heroicons/vue/24/outline";
 import BaseButton from "@/components/base/BaseButton.vue";
 import { onMounted, onUnmounted, onUpdated, ref } from "vue";
+import BaseIcon from "./BaseIcon.vue";
 
 interface Props {
   options: IOptionsItem[];
