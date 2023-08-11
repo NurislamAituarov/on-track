@@ -3,7 +3,8 @@ import { FunctionalComponent, HTMLAttributes, VNodeProps } from 'vue';
 export interface INavItems {
   title: string;
   id: number;
-  icon: FunctionalComponent<HTMLAttributes & VNodeProps>;
+  // icon: FunctionalComponent<HTMLAttributes & VNodeProps>;
+  icon: string;
 }
 export type THourItem = {
   hour: number;

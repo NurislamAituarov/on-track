@@ -10,7 +10,8 @@
         }"
         @click="emit('open-page', item.title)"
       >
-        <component :is="item.icon" class="w-6 h-6" />
+        <!-- <component :is="item.icon" class="w-6 h-6" /> -->
+        <BaseIcon :name="item.icon" class="w-6 h-6" />
         {{ item.title }}</NavIcon
       >
     </ul>
@@ -19,8 +20,10 @@
 
 <script lang="ts" setup>
 import { onMounted } from "vue";
+
 import NavIcon from "@/components/nav/NavItem.vue";
 import { INavItems } from "@/types";
+import BaseIcon from "../base/BaseIcon.vue";
 
 defineProps<{ navItems: INavItems[]; currentPage: string }>();
 const emit = defineEmits(["open-page"]);
