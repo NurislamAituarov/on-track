@@ -12,14 +12,13 @@
       placeholder="Rest"
       :selected="timelineItem.activityId"
       @select="selectActivity(timelineItem, $event)"
-      @reset-selected-item="selectActivity(timelineItem, $event)"
     />
     <TimeLineStopWatch :timeline-item="timelineItem" />
   </li>
 </template>
 
 <script lang="ts" setup>
-import { inject, nextTick, ref, watchPostEffect } from "vue";
+import { inject, nextTick, ref, watch, watchPostEffect } from "vue";
 
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import TimeLineHour from "./TimeLineHour.vue";
@@ -34,7 +33,6 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-defineEmits(["reset-selected-item", "scroll-to-hour"]);
 
 const activitySelectOptions = inject(
   "activity-select-options"
@@ -44,6 +42,7 @@ const selectActivity = inject("select-activity") as (
   timelineItem: THourItem,
   activityId: number
 ) => void;
+const logoTime = inject("logo-time") as () => string;
 
 const refTimelineItem = ref<HTMLLIElement | null>(null);
 
@@ -55,6 +54,11 @@ watchPostEffect(async () => {
     await nextTick();
     scrollToCurrentTimeLineItem(refTimelineItem.value);
   }
+});
+
+watch(logoTime, (value) => {
+  if (value === "scroll" && props.timelineItem.hour === new Date().getHours())
+    scrollToHour();
 });
 
 async function scrollToHour() {

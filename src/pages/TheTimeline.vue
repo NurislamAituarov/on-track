@@ -14,6 +14,7 @@
 <script lang="ts" setup>
 import TimelineItem from "@/components/timeline/TimeLineItem.vue";
 import { THourItem } from "@/types";
+
 interface Props {
   timelineItems: THourItem[];
   page: string;
