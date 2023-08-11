@@ -8,13 +8,13 @@ export const SECONDS_IN_HOUR = 3600;
 export const MILlISECONDS_IN_SECONDS = 1000;
 
 import { INavItems, IPeriodSelectItem } from '@/types';
-import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outline';
+// import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outline';
 import { generatePeriodSelectOptions } from './helper';
 
 export const navItems: INavItems[] = [
-  { title: PAGE_TIMELINE, id: 1, icon: ClockIcon },
-  { title: PAGE_ACTIVITIES, id: 2, icon: ListBulletIcon },
-  { title: PAGE_PROGRESS, id: 3, icon: ChartBarIcon },
+  { title: PAGE_TIMELINE, id: 1, icon: 'Clock' },
+  { title: PAGE_ACTIVITIES, id: 2, icon: 'ListBullet' },
+  { title: PAGE_PROGRESS, id: 3, icon: 'ChartBar' },
 ];
 
 const periodsInMinutes = [
