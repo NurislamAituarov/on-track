@@ -7,7 +7,8 @@
 
 <script lang="ts" setup>
 import { SECONDS_IN_MINUTE } from "@/lib/constants";
-import { formatSeconds, getTotalActivitySeconds } from "@/lib/helper";
+import { formatSeconds } from "@/lib/helper";
+import { getTotalActivitySeconds } from "@/lib/helper";
 import { IActivitiesItem, THourItem } from "@/types";
 import { computed, inject } from "vue";
 
