@@ -3,11 +3,14 @@
     <div class="truncate text-xl">{{ activity.name }}</div>
 
     <div class="flex h-5 overflow-hidden rounded bg-neutral-200">
-      <div :class="`bg-${color}-500`" :style="`width: ${progress}`"></div>
+      <div
+        :class="getProgressColorClass(+progress)"
+        :style="`width: ${progress}%`"
+      ></div>
     </div>
 
     <div class="flex justify-between font-mono text-sm">
-      <span>{{ progress }}</span>
+      <span>{{ +progress >= 100 ? 100 : progress }}%</span>
       <span>{{ timeProgress }}</span>
     </div>
   </li>
@@ -15,7 +18,10 @@
 
 
 <script setup lang="ts">
-import { IActivitiesItem } from "@/types";
+import { computed, inject } from "vue";
+import { getTotalActivitySeconds } from "@/lib/helper";
+import { IActivitiesItem, THourItem } from "@/types";
+import { getProgressColorClass } from "@/lib/helper";
 
 interface Props {
   index: number;
@@ -23,9 +29,20 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const timelineItems = inject("timeline-items") as THourItem[];
 
-const color = ["red", "yellow", "purple", "green"][props.index];
-const progress = ["10%", "50%", "70%", "100%"][props.index];
+const progress = computed(() => {
+  const activitySeconds = getTotalActivitySeconds(
+    props.activity,
+    timelineItems
+  );
+  const secondsToComplete = props.activity.secondsToComplete
+    ? props.activity.secondsToComplete
+    : 0;
+
+  return ((activitySeconds * 100) / secondsToComplete).toFixed();
+});
+
 const timeProgress = [
   "03:00 / 30:00",
   "15:00 / 30:00",

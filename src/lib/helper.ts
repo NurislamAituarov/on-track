@@ -24,10 +24,10 @@ export function generateTimelineItems(activities: IActivitiesItem[]) {
   for (let hour = 0; hour < HOURS_IN_DAY; hour++) {
     timelineItems.push({
       hour,
-      activityId: [0, 1, 2, 3, 4].includes(hour) ? activities[hour % 3].id : null,
-      activitySeconds: [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0,
-      // activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
-      // activitySeconds: hour % 4 === 0 ? 0 : (15 * MINUTES_IN_HOUR * hour) % SECONDS_IN_HOUR,
+      // activityId: [0, 1, 2, 3, 4].includes(hour) ? activities[hour % 3].id : null,
+      // activitySeconds: [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0,
+      activityId: null,
+      activitySeconds: 0,
     });
   }
   return timelineItems;
@@ -49,7 +49,8 @@ export function generateActivities(): IActivitiesItem[] {
   return ['Coding', 'Reading', 'Training'].map((el, i) => ({
     id: id(),
     name: el,
-    secondsToComplete: i * SECONDS_IN_HOUR,
+    secondsToComplete: 15 * 60,
+    // secondsToComplete: i * SECONDS_IN_HOUR,
   }));
 }
 
@@ -87,7 +88,6 @@ export function scrollToCurrentTimeLineItem(el: HTMLLIElement | null, isSmooth =
     });
   }
 }
-
 export function getTotalActivitySeconds(activity: IActivitiesItem, timelineItems: THourItem[]) {
   return timelineItems
     .filter((item) => item.activityId === activity.id)
@@ -95,3 +95,10 @@ export function getTotalActivitySeconds(activity: IActivitiesItem, timelineItems
       return Math.round(item.activitySeconds + total);
     }, 0);
 }
+
+export const getProgressColorClass = (percent: number) => {
+  if (percent < 33) return 'bg-red-500';
+  if (percent < 66) return 'bg-yellow-500';
+  if (percent < 100) return 'bg-blue-500';
+  return 'bg-green-500';
+};
