@@ -11,7 +11,14 @@
 
     <div class="flex justify-between font-mono text-sm">
       <span>{{ +progress >= 100 ? 100 : progress }}%</span>
-      <span>{{ timeProgress }}</span>
+      <span
+        >{{ formatSeconds(getTotalActivitySeconds(activity, timelineItems)) }} /
+        {{
+          activity.secondsToComplete
+            ? formatSeconds(activity.secondsToComplete)
+            : formatSeconds(0)
+        }}</span
+      >
     </div>
   </li>
 </template>
@@ -19,12 +26,11 @@
 
 <script setup lang="ts">
 import { computed, inject } from "vue";
-import { getTotalActivitySeconds } from "@/lib/helper";
+import { formatSeconds, getTotalActivitySeconds } from "@/lib/helper";
 import { IActivitiesItem, THourItem } from "@/types";
 import { getProgressColorClass } from "@/lib/helper";
 
 interface Props {
-  index: number;
   activity: IActivitiesItem;
 }
 
@@ -42,11 +48,4 @@ const progress = computed(() => {
 
   return ((activitySeconds * 100) / secondsToComplete).toFixed();
 });
-
-const timeProgress = [
-  "03:00 / 30:00",
-  "15:00 / 30:00",
-  "21:00 / 30:00",
-  "30:00 / 30:00",
-][props.index];
 </script>

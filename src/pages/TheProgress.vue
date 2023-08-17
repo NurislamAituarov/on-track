@@ -1,9 +1,8 @@
 <template>
   <ul class="divide-y">
     <ProgressItem
-      v-for="(item, ind) of trackedActivities"
+      v-for="item of trackedActivities"
       :key="item.id"
-      :index="ind"
       :activity="item"
     />
   </ul>
