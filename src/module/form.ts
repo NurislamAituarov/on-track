@@ -1,29 +1,5 @@
+import { IErrors, IField, IForm, IValidators } from '@/types';
 import { computed, reactive, ref, watch } from 'vue';
-
-interface IValidators {
-  required: () => boolean;
-  minLength?: any;
-}
-
-interface IField {
-  valid?: boolean;
-  errors?: IErrors;
-  value: string;
-  touched?: boolean;
-  blur?: () => void;
-  validators: IValidators;
-}
-
-export interface IForm {
-  email: IField;
-  password: IField;
-  valid: boolean;
-}
-
-interface IErrors {
-  required?: boolean;
-  minLength?: boolean;
-}
 
 ///////////////////////////////////////////////////////////
 
@@ -66,7 +42,6 @@ export function useForm(init: IForm) {
       .filter((el) => el !== 'valid')
       .reduce((acc, el) => {
         acc = form[el].valid;
-
         return acc;
       }, true);
   });

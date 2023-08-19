@@ -62,7 +62,10 @@
 
 <script setup lang="ts">
 import BaseButton from "@/components/base/BaseButton.vue";
-import { IForm, useForm } from "@/module/form";
+import { PAGE_TIMELINE } from "@/lib/constants";
+import { useForm } from "@/module/form";
+import { IForm } from "@/types";
+import { useRouter } from "vue-router";
 
 const required = (val?: string) => !!val;
 const minLength = (num: number) => (val: string) => val.length >= num;
@@ -84,14 +87,24 @@ const form: IForm = useForm({
   valid: false,
 });
 
-function submit() {
-  console.log(form);
-  form.email.value = "";
-  form.email.valid = false;
-  form.email.touched = false;
+const router = useRouter();
 
-  form.password.value = "";
-  form.password.valid = false;
-  form.password.touched = false;
+function submit() {
+  fetch("https://jsonplaceholder.typicode.com/users")
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+      router.push({ path: `/#${PAGE_TIMELINE}` });
+    });
+
+  Object.keys(form).forEach((key) => {
+    const field = form[key as keyof IForm];
+
+    if (typeof field !== "boolean") {
+      field.value = "";
+      field.valid = false;
+      field.touched = false;
+    }
+  });
 }
 </script>
