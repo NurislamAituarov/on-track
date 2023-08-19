@@ -27,3 +27,30 @@ export interface IActivitiesItem {
   name: string;
   secondsToComplete: number | null;
 }
+
+// Form type
+
+export interface IValidators {
+  required: () => boolean;
+  minLength?: any;
+}
+
+export interface IField {
+  valid?: boolean;
+  errors?: IErrors;
+  value: string;
+  touched?: boolean;
+  blur?: () => void;
+  validators: IValidators;
+}
+
+export interface IForm {
+  email: IField;
+  password: IField;
+  valid: boolean;
+}
+
+export interface IErrors {
+  required?: boolean;
+  minLength?: boolean;
+}
