@@ -14,15 +14,27 @@
 </template>
 
 <script lang="ts" setup>
-import { provide, ref } from "vue";
+import { onMounted, provide, ref } from "vue";
 
 import TheMain from "@/components/main/TheMain.vue";
 import TheNav from "@/components/nav/TheNav.vue";
 import TheHeader from "@/components/header/TheHeader.vue";
 
 import { normalizeHash } from "@/lib/helper";
-import { PAGE_ACTIVITIES, navItems, PAGE_TIMELINE } from "@/lib/constants";
+import {
+  PAGE_ACTIVITIES,
+  navItems,
+  PAGE_TIMELINE,
+  PAGE_AUTHORIZATION,
+} from "@/lib/constants";
+import { useRouter } from "vue-router";
 //////////////////////////////////////////////////////////////////
+const router = useRouter();
+
+onMounted(() => {
+  const user = localStorage.getItem("user");
+  if (!user) router.push({ path: PAGE_AUTHORIZATION });
+});
 
 // взять из url имя странаицы
 const currentPage = ref(normalizeHash(navItems));
