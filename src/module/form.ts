@@ -30,10 +30,10 @@ export function useField(field: IField) {
   return { valid, value, errors, touched, blur: () => (touched.value = true) };
 }
 
-export function useForm(init: IForm) {
+export function useForm(initForm: IForm) {
   const form = reactive<IForm | any>({});
 
-  for (const [key, value] of Object.entries(init)) {
+  for (const [key, value] of Object.entries(initForm)) {
     form[key] = useField(value);
   }
 
@@ -47,4 +47,16 @@ export function useForm(init: IForm) {
   });
 
   return form;
+}
+
+export function resetForm(form: IForm) {
+  Object.keys(form).forEach((key) => {
+    const field = form[key as keyof IForm];
+
+    if (typeof field !== 'boolean') {
+      field.value = '';
+      field.valid = false;
+      field.touched = false;
+    }
+  });
 }

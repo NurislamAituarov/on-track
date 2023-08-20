@@ -5,8 +5,6 @@
   >
     <h1>Auth</h1>
 
-    <pre>{{ form }}</pre>
-
     <div class="form__control">
       <label for="email" class="mb-10">Email</label>
       <input
@@ -55,17 +53,28 @@
       </small>
     </div>
 
-    <BaseButton type="success" :disabled="!form.valid">Submit</BaseButton>
+    <BaseButton ref="refButton" type="success" :disabled="!form.valid"
+      >Submit</BaseButton
+    >
   </form>
 </template>
 
 
 <script setup lang="ts">
+import { useRouter } from "vue-router";
+
 import BaseButton from "@/components/base/BaseButton.vue";
 import { PAGE_TIMELINE } from "@/lib/constants";
-import { useForm } from "@/module/form";
+import { resetForm, useForm } from "@/module/form";
 import { IForm } from "@/types";
-import { useRouter } from "vue-router";
+import { instance } from "@/api";
+import { onMounted } from "vue";
+
+interface IUser {
+  email: string;
+  password: string;
+  id: number;
+}
 
 const required = (val?: string) => !!val;
 const minLength = (num: number) => (val: string) => val.length >= num;
@@ -86,25 +95,28 @@ const form: IForm = useForm({
   },
   valid: false,
 });
-
 const router = useRouter();
 
-function submit() {
-  fetch("https://jsonplaceholder.typicode.com/users")
-    .then((res) => res.json())
-    .then((res) => {
-      console.log(res);
+onMounted(() => {
+  const user = localStorage.getItem("user");
+  if (user) router.push({ path: `/#${PAGE_TIMELINE}` });
+});
+
+async function submit() {
+  try {
+    await instance({
+      url: "/posts",
+      method: "POST",
+      data: { email: form.email.value, password: form.password.value },
+    }).then((res) => {
+      console.log(res.data);
+      localStorage.setItem("user", JSON.stringify(res.data));
       router.push({ path: `/#${PAGE_TIMELINE}` });
     });
+  } catch (e) {
+    console.error(e);
+  }
 
-  Object.keys(form).forEach((key) => {
-    const field = form[key as keyof IForm];
-
-    if (typeof field !== "boolean") {
-      field.value = "";
-      field.valid = false;
-      field.touched = false;
-    }
-  });
+  resetForm(form);
 }
 </script>
