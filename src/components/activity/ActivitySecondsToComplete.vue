@@ -34,13 +34,10 @@ const sign = computed(() => {
   return secondsDiff.value >= 0 ? "+" : "-";
 });
 
-const classes = computed(() => {
-  return `flex items-center rounded px-2 font-mono text-xl ${colorClasses.value}`;
-});
-
-const colorClasses = computed(() => {
-  return secondsDiff.value < 0
+const classes = computed(() => [
+  "flex items-center rounded px-2 font-mono text-xl",
+  secondsDiff.value < 0
     ? "bg-red-100 text-red-600"
-    : "bg-green-100 text-green-600";
-});
+    : "bg-green-100 text-green-600",
+]);
 </script>
