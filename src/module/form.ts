@@ -36,7 +36,6 @@ export function useForm(initForm: IForm) {
   for (const [key, value] of Object.entries(initForm)) {
     form[key] = useField(value);
   }
-
   form.valid = computed(() => {
     return Object.keys(form)
       .filter((el) => el !== 'valid')

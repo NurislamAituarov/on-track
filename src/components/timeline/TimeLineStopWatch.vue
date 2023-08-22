@@ -23,67 +23,23 @@
 </template>
 
 <script lang="ts" setup>
+import { inject } from "vue";
 import BaseButton from "../base/BaseButton.vue";
-import { formatSeconds } from "@/lib/helper";
-import { computed, inject, ref, watch } from "vue";
-import { MILlISECONDS_IN_SECONDS } from "@/lib/constants";
-import { THourItem } from "@/types";
+import { THourItem, UpdateTimelineItemActivityFunction } from "@/types";
 import BaseIcon from "../base/BaseIcon.vue";
+import { useStopWatch } from "@/lib/hooks";
 
 interface Props {
   timelineItem: THourItem;
 }
-type UpdateTimelineItemActivityFunction = (
-  timelineItem: THourItem,
-  second: number
-) => void;
-
 const props = defineProps<Props>();
 
 const updateTimelineItemActivitySeconds = inject(
   "update-timeline-item-activity"
 ) as UpdateTimelineItemActivityFunction;
 
-const seconds = ref(props.timelineItem.activitySeconds);
-const isRunning = ref<boolean | number>(false);
-
-const formattedSeconds = computed(() => {
-  return formatSeconds(seconds.value);
-});
-
 const isStartButtonDisabled = props.timelineItem.hour !== new Date().getHours();
 
-watch(
-  () => props.timelineItem.activityId,
-  () => {
-    updateTimelineItemActivitySeconds(props.timelineItem, seconds.value);
-  }
-);
-
-function start() {
-  isRunning.value = setInterval(() => {
-    updateTimelineItemActivitySeconds(
-      props.timelineItem,
-      props.timelineItem.activitySeconds + 1
-    );
-
-    seconds.value++;
-  }, MILlISECONDS_IN_SECONDS);
-}
-
-function stop() {
-  if (typeof isRunning.value === "number") {
-    clearInterval(isRunning.value);
-    isRunning.value = false;
-  }
-}
-
-function reset() {
-  stop();
-  updateTimelineItemActivitySeconds(
-    props.timelineItem,
-    props.timelineItem.activitySeconds - seconds.value
-  );
-  seconds.value = 0;
-}
+const { seconds, isRunning, formattedSeconds, start, stop, reset } =
+  useStopWatch(props.timelineItem, updateTimelineItemActivitySeconds);
 </script>

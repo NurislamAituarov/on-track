@@ -54,3 +54,5 @@ export interface IErrors {
   required?: boolean;
   minLength?: boolean;
 }
+
+export type UpdateTimelineItemActivityFunction = (timelineItem: THourItem, second: number) => void;
