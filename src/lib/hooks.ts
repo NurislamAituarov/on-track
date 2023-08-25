@@ -1,4 +1,4 @@
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { MILlISECONDS_IN_SECONDS } from './constants';
 import { THourItem, UpdateTimelineItemActivityFunction } from '@/types';
 import { formatSeconds } from './helper';
@@ -9,13 +9,6 @@ export function useStopWatch(
 ) {
   const seconds = ref(timelineItem.activitySeconds);
   const isRunning = ref<boolean | number>(false);
-
-  watch(
-    () => timelineItem.activityId,
-    () => {
-      updateTimelineItemActivitySeconds(timelineItem, seconds.value);
-    },
-  );
 
   const formattedSeconds = computed(() => {
     return formatSeconds(seconds.value);
