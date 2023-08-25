@@ -21,11 +21,7 @@ import {
   PAGE_ACTIVITIES,
   PAGE_PROGRESS,
 } from "../../lib/constants";
-import {
-  timelineItems,
-  updateTimelineItemActivitySeconds,
-  selectActivity,
-} from "@/module/timeline-items";
+import { timelineItems, selectActivity } from "@/module/timeline-items";
 import {
   activities,
   activitySelectOptions,
@@ -37,7 +33,6 @@ import {
 defineProps<{ page: string }>();
 
 // Provide
-provide("update-timeline-item-activity", updateTimelineItemActivitySeconds);
 provide("timeline-items", timelineItems);
 provide("activities", activities);
 provide("activity-select-options", activitySelectOptions);

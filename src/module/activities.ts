@@ -6,7 +6,7 @@ import {
   id,
 } from '@/lib/helper';
 import { timelineItems } from './timeline-items';
-import { IActivitiesItem, THourItem } from '@/types';
+import { IActivitiesItem } from '@/types';
 
 export const activities = reactive(generateActivities());
 export const activitySelectOptions = computed(() => generateActivitySelectOptions(activities));
@@ -19,13 +19,18 @@ export function createActivityItem(name: string) {
   });
 }
 
-export function deleteActivityItem(id: string) {
+function resetTimelineItemActivities(id: string) {
   timelineItems.forEach((el) => {
     if (el.activityId === id) {
       el.activityId = null;
       el.activitySeconds = 0;
     }
   });
+}
+
+export function deleteActivityItem(id: string) {
+  resetTimelineItemActivities(id);
+
   const activityItemId = activities.findIndex((el) => el.id === id);
   activities.splice(activityItemId, 1);
 }

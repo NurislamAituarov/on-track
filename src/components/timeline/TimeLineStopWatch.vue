@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full items-center gap-2">
-    <BaseButton type="danger" @click="reset" :disabled="!seconds">
+    <BaseButton type="danger" @click="reset" :disabled="!formattedSeconds">
       <BaseIcon name="ArrowPath" class="h-8" />
     </BaseButton>
     <div
@@ -23,20 +23,25 @@
 </template>
 
 <script lang="ts" setup>
-import { inject } from "vue";
+import { watch } from "vue";
 import BaseButton from "../base/BaseButton.vue";
-import { THourItem, UpdateTimelineItemActivityFunction } from "@/types";
 import BaseIcon from "../base/BaseIcon.vue";
+import { THourItem } from "@/types";
 import { useStopWatch } from "@/lib/hooks";
+import { updateTimelineItemActivitySeconds } from "@/module/timeline-items";
+import { formatSeconds } from "@/lib/helper";
 
 interface Props {
   timelineItem: THourItem;
 }
 const props = defineProps<Props>();
 
-const updateTimelineItemActivitySeconds = inject(
-  "update-timeline-item-activity"
-) as UpdateTimelineItemActivityFunction;
+watch(
+  () => props.timelineItem.activityId,
+  () => {
+    updateTimelineItemActivitySeconds(props.timelineItem, seconds.value);
+  }
+);
 
 const isStartButtonDisabled = props.timelineItem.hour !== new Date().getHours();
 

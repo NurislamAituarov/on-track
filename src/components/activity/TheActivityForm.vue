@@ -27,14 +27,15 @@ const createActivityItem = inject("create-activity-item") as (
 const nameActivity = ref("");
 const refValue = ref();
 
-function submit() {
+async function submit() {
   if (!nameActivity.value) return refValue.value.focus();
-  createActivityItem(nameActivity.value);
+  await createActivityItem(nameActivity.value);
 
   document.body.scrollIntoView({
     block: "end",
     behavior: "smooth",
   });
+
   nameActivity.value = "";
 }
 </script>
