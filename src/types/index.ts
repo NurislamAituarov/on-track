@@ -36,12 +36,12 @@ export interface IValidators {
 }
 
 export interface IField {
+  validators: IValidators;
+  value: string;
   valid?: boolean;
   errors?: IErrors;
-  value: string;
   touched?: boolean;
   blur?: () => void;
-  validators: IValidators;
 }
 
 export interface IForm {

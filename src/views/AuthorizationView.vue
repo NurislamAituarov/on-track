@@ -53,9 +53,15 @@
       </small>
     </div>
 
-    <BaseButton ref="refButton" type="success" :disabled="!form.valid"
-      >Submit</BaseButton
+    <BaseButton
+      ref="refButton"
+      type="success"
+      :disabled="!form.valid"
+      class="flex justify-center"
     >
+      <TheSpinner v-if="loading" />
+      <template v-else>Submit</template>
+    </BaseButton>
   </form>
 </template>
 
@@ -64,17 +70,12 @@
 import { useRouter } from "vue-router";
 
 import BaseButton from "@/components/base/BaseButton.vue";
+import TheSpinner from "@/components/spinner/TheSpinner.vue";
 import { PAGE_TIMELINE } from "@/lib/constants";
 import { resetForm, useForm } from "@/module/form";
 import { IForm } from "@/types";
 import { instance } from "@/api";
-import { onMounted } from "vue";
-
-interface IUser {
-  email: string;
-  password: string;
-  id: number;
-}
+import { onMounted, ref } from "vue";
 
 const required = (val?: string) => !!val;
 const minLength = (num: number) => (val: string) => val.length >= num;
@@ -96,6 +97,7 @@ const form: IForm = useForm({
   valid: false,
 });
 const router = useRouter();
+const loading = ref(false);
 
 onMounted(() => {
   const user = localStorage.getItem("user");
@@ -103,12 +105,14 @@ onMounted(() => {
 });
 
 async function submit() {
+  loading.value = true;
   try {
     await instance({
       url: "/posts",
       method: "POST",
       data: { email: form.email.value, password: form.password.value },
     }).then((res) => {
+      loading.value = false;
       console.log(res.data);
       localStorage.setItem("user", JSON.stringify(res.data));
       router.push({ path: `/#${PAGE_TIMELINE}` });
