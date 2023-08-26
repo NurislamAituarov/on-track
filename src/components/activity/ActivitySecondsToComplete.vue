@@ -9,15 +9,15 @@
 import { SECONDS_IN_MINUTE } from "@/lib/constants";
 import { formatSeconds } from "@/lib/helper";
 import { getTotalActivitySeconds } from "@/lib/helper";
-import { IActivitiesItem, THourItem } from "@/types";
-import { computed, inject } from "vue";
+import { timelineItems } from "@/module/timeline-items";
+import { IActivitiesItem } from "@/types";
+import { computed } from "vue";
 
 interface Props {
   activity: IActivitiesItem;
 }
 
 const props = defineProps<Props>();
-const timelineItems = inject("timeline-items") as THourItem[];
 
 const secondsDiff = computed(() => {
   return props.activity.secondsToComplete

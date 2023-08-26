@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { provide } from "vue";
+import { provide, watch } from "vue";
 import TheActivities from "@/pages/TheActivities.vue";
 import TheProgress from "@/pages/TheProgress.vue";
 import TheTimeline from "@/pages/TheTimeline.vue";
@@ -32,8 +32,11 @@ import {
 
 defineProps<{ page: string }>();
 
+watch(timelineItems, () => {
+  // console.log(timelineItems);
+});
+
 // Provide
-provide("timeline-items", timelineItems);
 provide("activities", activities);
 provide("activity-select-options", activitySelectOptions);
 provide("select-activity", selectActivity);

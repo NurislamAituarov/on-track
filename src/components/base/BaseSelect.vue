@@ -62,9 +62,6 @@ onMounted(() => {
 onUnmounted(() => {
   document.removeEventListener("click", listener);
 });
-onUpdated(() => {
-  console.log("update");
-});
 
 // Methods //
 function openModalSelect() {

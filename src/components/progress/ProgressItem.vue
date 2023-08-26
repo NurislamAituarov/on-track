@@ -25,17 +25,17 @@
 
 
 <script setup lang="ts">
-import { computed, inject } from "vue";
+import { computed } from "vue";
 import { formatSeconds, getTotalActivitySeconds } from "@/lib/helper";
-import { IActivitiesItem, THourItem } from "@/types";
+import { IActivitiesItem } from "@/types";
 import { getProgressColorClass } from "@/lib/helper";
+import { timelineItems } from "@/module/timeline-items";
 
 interface Props {
   activity: IActivitiesItem;
 }
 
 const props = defineProps<Props>();
-const timelineItems = inject("timeline-items") as THourItem[];
 
 const progress = computed(() => {
   const activitySeconds = getTotalActivitySeconds(
