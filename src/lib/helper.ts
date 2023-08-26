@@ -81,12 +81,11 @@ export function formatSeconds(seconds: number) {
 }
 
 export function scrollToCurrentTimeLineItem(el: HTMLLIElement | null, isSmooth = false) {
-  if (el) {
+  if (el)
     el.scrollIntoView({
       block: 'center',
       behavior: isSmooth ? 'smooth' : undefined,
     });
-  }
 }
 export function getTotalActivitySeconds(activity: IActivitiesItem, timelineItems: THourItem[]) {
   return timelineItems

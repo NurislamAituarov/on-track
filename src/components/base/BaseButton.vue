@@ -1,7 +1,5 @@
 <template>
-  <button
-    :class="`${typeClasses[type]} rounded p-3 disabled:cursor:not-allowed disabled:opacity-50`"
-  >
+  <button :class="classes">
     <slot></slot>
   </button>
 </template>
@@ -12,7 +10,7 @@
 interface Props {
   type: "neutral" | "danger" | "primary" | "success" | "warning";
 }
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const typeClasses = {
   neutral: "bg-gray-100 enabled:hover:bg-gray-200",
@@ -21,4 +19,9 @@ const typeClasses = {
   success: "bg-green-500 enabled:hover:bg-green-600 text-white",
   warning: "bg-yellow-500 enabled:hover:bg-yellow-600 text-white",
 };
+
+const classes = [
+  typeClasses[props.type],
+  "rounded p-3 disabled:cursor:not-allowed disabled:opacity-50",
+];
 </script>
