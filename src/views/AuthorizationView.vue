@@ -3,7 +3,9 @@
     @submit.prevent="submit"
     class="text-start px-5 py-20 flex flex-col gap-5 max-w-2xl mx-auto my-0"
   >
-    <h1>Auth</h1>
+    <pre>{{ form }}</pre>
+
+    <h1 class="text-5xl">Authorization</h1>
 
     <div class="form__control">
       <label for="email" class="mb-10">Email</label>
@@ -23,6 +25,11 @@
         v-if="form.email.errors?.required && form.email.touched"
         class="text-red-500"
         >Email field is required
+      </small>
+      <small
+        v-else-if="form.email.errors?.validateEmail && form.email.touched"
+        class="text-red-500"
+        >Invalid email address.
       </small>
     </div>
 
@@ -77,14 +84,18 @@ import { IForm } from "@/types";
 import { instance } from "@/api";
 import { onMounted, ref } from "vue";
 
+const validRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 const required = (val?: string) => !!val;
 const minLength = (num: number) => (val: string) => val.length >= num;
+const validateEmail = (val: string) => !!val.match(validRegex);
 
 const form: IForm = useForm({
   email: {
     value: "",
     validators: {
       required,
+      validateEmail,
     },
   },
   password: {
@@ -104,19 +115,31 @@ onMounted(() => {
   if (user) router.push({ path: `/#${PAGE_TIMELINE}` });
 });
 
+interface IData {
+  email: string;
+  password: string;
+  id: number;
+}
+
+interface IResponse {
+  data: IData;
+  status: number;
+  statusText: string;
+}
+
 async function submit() {
   loading.value = true;
   try {
-    await instance({
+    const res: IResponse = await instance({
       url: "/posts",
       method: "POST",
       data: { email: form.email.value, password: form.password.value },
-    }).then((res) => {
-      loading.value = false;
-      console.log(res.data);
-      localStorage.setItem("user", JSON.stringify(res.data));
-      router.push({ path: `/#${PAGE_TIMELINE}` });
     });
+
+    loading.value = false;
+    console.log(res.data);
+    localStorage.setItem("user", JSON.stringify(res.data));
+    router.push({ path: `/#${PAGE_TIMELINE}` });
   } catch (e) {
     console.error(e);
   }

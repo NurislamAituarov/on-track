@@ -2,12 +2,17 @@ import { IErrors, IField, IForm, IValidators } from '@/types';
 import { computed, reactive, ref, watch } from 'vue';
 
 ///////////////////////////////////////////////////////////
+const initialErrorsData = {
+  required: false,
+  minLength: false,
+  validateEmail: false,
+};
 
 export function useField(field: IField) {
   const valid = ref(true);
   const value = ref(field.value);
   const touched = ref(false);
-  const errors = reactive<IErrors>({});
+  const errors = reactive<IErrors>(initialErrorsData);
 
   function reassign(value: string) {
     valid.value = true;
