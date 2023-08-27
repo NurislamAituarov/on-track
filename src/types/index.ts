@@ -32,6 +32,7 @@ export interface IActivitiesItem {
 
 export interface IValidators {
   required: () => boolean;
+  validateEmail?: (val: string) => boolean;
   minLength?: any;
 }
 
@@ -51,8 +52,9 @@ export interface IForm {
 }
 
 export interface IErrors {
-  required?: boolean;
+  required: boolean;
   minLength?: boolean;
+  validateEmail?: boolean;
 }
 
 export type UpdateTimelineItemActivityFunction = (timelineItem: THourItem, second: number) => void;
