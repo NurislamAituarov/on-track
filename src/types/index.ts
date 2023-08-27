@@ -58,3 +58,16 @@ export interface IErrors {
 }
 
 export type UpdateTimelineItemActivityFunction = (timelineItem: THourItem, second: number) => void;
+
+// Type response
+interface IData {
+  email: string;
+  password: string;
+  id: number;
+}
+
+export interface IResponse {
+  data: IData;
+  status: number;
+  statusText: string;
+}

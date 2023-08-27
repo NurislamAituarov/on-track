@@ -15,6 +15,8 @@ import {
   ClockIcon as Clock,
   ListBulletIcon as ListBullet,
   ChartBarIcon as ChartBar,
+  EyeIcon as Eye,
+  EyeSlashIcon as EyeSlash,
 } from "@heroicons/vue/24/outline";
 
 interface Props {
@@ -36,5 +38,7 @@ const icons: TIcons = {
   Clock,
   ListBullet,
   ChartBar,
+  Eye,
+  EyeSlash,
 };
 </script>
