@@ -4,13 +4,13 @@
 
     <div class="flex h-5 overflow-hidden rounded bg-neutral-200">
       <div
-        :class="getProgressColorClass(+progress)"
-        :style="`width: ${progress}%`"
+        :class="['transition-all', getProgressColorClass(progress)]"
+        :style="`width: ${Math.min(progress, 100)}%`"
       ></div>
     </div>
 
     <div class="flex justify-between font-mono text-sm">
-      <span>{{ +progress >= 100 ? 100 : progress }}%</span>
+      <span>{{ progress }}%</span>
       <span
         >{{ formatSeconds(getTotalActivitySeconds(activity, timelineItems)) }} /
         {{
@@ -25,11 +25,11 @@
 
 
 <script setup lang="ts">
-import { computed } from "vue";
 import { formatSeconds, getTotalActivitySeconds } from "@/lib/helper";
 import { IActivitiesItem } from "@/types";
 import { getProgressColorClass } from "@/lib/helper";
 import { timelineItems } from "@/module/timeline-items";
+import { useProgress } from "@/lib/hooks";
 
 interface Props {
   activity: IActivitiesItem;
@@ -37,15 +37,5 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const progress = computed(() => {
-  const activitySeconds = getTotalActivitySeconds(
-    props.activity,
-    timelineItems
-  );
-  const secondsToComplete = props.activity.secondsToComplete
-    ? props.activity.secondsToComplete
-    : 0;
-
-  return ((activitySeconds * 100) / secondsToComplete).toFixed();
-});
+const progress = useProgress(props.activity);
 </script>

@@ -11,6 +11,10 @@ import { IActivitiesItem, THourItem } from '@/types';
 export const activities = reactive(generateActivities());
 export const activitySelectOptions = computed(() => generateActivitySelectOptions(activities));
 
+export const trackedActivities = computed(() =>
+  activities.filter(({ secondsToComplete }) => secondsToComplete),
+);
+
 export function createActivityItem(name: string) {
   activities.push({
     id: id(),
@@ -52,3 +56,13 @@ export function getTotalActivityProgress(activity: IActivitiesItem) {
 
   return ((activitySeconds * 100) / secondsToComplete).toFixed();
 }
+
+export function calculateCompletionPercentage(totalTrackedSeconds: number) {
+  return Math.floor((totalTrackedSeconds * 100) / totalActivitySecondsToComplete.value);
+}
+
+const totalActivitySecondsToComplete = computed(() => {
+  return trackedActivities.value
+    .map(({ secondsToComplete }) => secondsToComplete ?? 0)
+    .reduce((total, seconds) => total + seconds, 0);
+});
