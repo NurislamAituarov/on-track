@@ -137,7 +137,7 @@ async function submit() {
   loading.value = true;
   try {
     const res: IResponse = await instance({
-      url: "/postss",
+      url: "/posts",
       method: "POST",
       data: { email: form.email.value, password: form.password.value },
     });
