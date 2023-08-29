@@ -58,7 +58,10 @@ export function getTotalActivityProgress(activity: IActivitiesItem) {
 }
 
 export function calculateCompletionPercentage(totalTrackedSeconds: number) {
-  return Math.floor((totalTrackedSeconds * 100) / totalActivitySecondsToComplete.value);
+  const percentage = Math.floor((totalTrackedSeconds * 100) / totalActivitySecondsToComplete.value);
+  if (Number.isNaN(percentage)) return 0;
+
+  return percentage;
 }
 
 const totalActivitySecondsToComplete = computed(() => {
