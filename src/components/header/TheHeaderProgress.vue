@@ -1,6 +1,6 @@
 <template>
   <a :href="`#${PAGE_PROGRESS}`" class="text-sm">
-    <div v-if="+percentage >= 100" class="flex items-center gap-2">
+    <div v-if="percentage >= 100" class="flex items-center gap-2">
       <p>Day complete!</p>
       <CheckCircleIcon class="h-7 text-green-500" />
     </div>

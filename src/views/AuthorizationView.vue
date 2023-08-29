@@ -98,7 +98,7 @@ import BaseIcon from "@/components/base/BaseIcon.vue";
 import { PAGE_TIMELINE } from "@/lib/constants";
 import { resetForm, useForm } from "@/module/form";
 import { IForm, IResponse } from "@/types";
-import { instance } from "@/api";
+import { formServices } from "@/api/services";
 
 const validRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -128,7 +128,7 @@ const loading = ref(false);
 const show = ref(false);
 const errorMessage = ref("");
 
-onMounted(() => {
+onMounted(async () => {
   const user = localStorage.getItem("user");
   if (user) router.push({ path: `/#${PAGE_TIMELINE}` });
 });
@@ -136,15 +136,13 @@ onMounted(() => {
 async function submit() {
   loading.value = true;
   try {
-    const res: IResponse = await instance({
-      url: "/posts",
-      method: "POST",
-      data: { email: form.email.value, password: form.password.value },
+    const res: IResponse = await formServices.sendDataFormAuthorization({
+      email: form.email.value,
+      password: form.password.value,
     });
 
     console.log(res.data);
     resetForm(form);
-
     localStorage.setItem("user", JSON.stringify(res.data));
     router.push({ path: `/#${PAGE_TIMELINE}` });
   } catch (e: any) {
