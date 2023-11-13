@@ -8,27 +8,23 @@
 
 
 <script setup lang="ts">
-import {
-  MILlISECONDS_IN_SECONDS,
-  MINUTES_IN_HOUR,
-  SECONDS_IN_DAY,
-  SECONDS_IN_MINUTE,
-} from "@/lib/constants";
 import { THourItem } from "@/types";
-import { computed, ref, watchEffect } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
+import {
+  calculateSecondsSinceMidnightInPercentage,
+  endTimer,
+  startTimer,
+} from "@/module/time";
 
 interface Props {
   timelineItems: THourItem[];
 }
 defineProps<Props>();
 
-const secondsSinceMidnight = ref(calculateSecondsSinceMidnight());
 const indicatorRef = ref();
 
-setInterval(
-  () => (secondsSinceMidnight.value += 5 * 60),
-  MILlISECONDS_IN_SECONDS
-);
+onMounted(startTimer);
+onUnmounted(endTimer);
 
 const calculateTopOffset = computed(() => {
   return (
@@ -37,25 +33,6 @@ const calculateTopOffset = computed(() => {
   );
 });
 
-const calculateSecondsSinceMidnightInPercentage = computed(() => {
-  return (100 * secondsSinceMidnight.value) / SECONDS_IN_DAY;
-});
-
-watchEffect(() => {
-  if (secondsSinceMidnight.value > SECONDS_IN_DAY) {
-    secondsSinceMidnight.value = 0;
-  }
-});
-
-function calculateSecondsSinceMidnight() {
-  const now = new Date();
-
-  return (
-    SECONDS_IN_MINUTE * MINUTES_IN_HOUR * now.getHours() +
-    SECONDS_IN_MINUTE * now.getMinutes() +
-    now.getSeconds()
-  );
-}
 function getTimelineHeight() {
   return indicatorRef.value?.parentNode.getBoundingClientRect().height;
 }

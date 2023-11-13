@@ -1,13 +1,20 @@
 <template>
   <main class="main flex flex-grow flex-col">
-    <TheTimeline
-      v-show="page === PAGE_TIMELINE"
-      :activity-select-options="activitySelectOptions"
-      :timelineItems="timelineItems"
-      :page="page"
-    />
-    <TheActivities v-show="page === PAGE_ACTIVITIES" :activities="activities" />
-    <TheProgress v-show="page === PAGE_PROGRESS" />
+    <KeepAlive>
+      <div>
+        <TheTimeline
+          v-if="page === PAGE_TIMELINE"
+          :activity-select-options="activitySelectOptions"
+          :timelineItems="timelineItems"
+          :page="page"
+        />
+        <TheActivities
+          v-if="page === PAGE_ACTIVITIES"
+          :activities="activities"
+        />
+        <TheProgress v-if="page === PAGE_PROGRESS" />
+      </div>
+    </KeepAlive>
   </main>
 </template>
 
