@@ -18,15 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  computed,
-  inject,
-  nextTick,
-  onMounted,
-  ref,
-  watch,
-  watchPostEffect,
-} from "vue";
+import { computed, inject, onMounted, ref, watch, watchPostEffect } from "vue";
 
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import TimeLineHour from "./TimeLineHour.vue";
@@ -64,13 +56,6 @@ const isCurrentHourTimeline = computed(() => {
 onMounted(() => {
   if (isCurrentHourTimeline.value) {
     scrollToCurrentTimeLineItem(refTimelineItem.value);
-  }
-});
-
-watchPostEffect(async () => {
-  if (isCurrentHourTimeline.value) {
-    await nextTick();
-    scrollToHour();
   }
 });
 

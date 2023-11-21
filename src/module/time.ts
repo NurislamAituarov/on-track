@@ -1,4 +1,4 @@
-import { MILlISECONDS_IN_SECONDS, SECONDS_IN_DAY } from '@/lib/constants';
+import { MILlISECONDS_IN_SECONDS, SECONDS_IN_DAY, SECONDS_IN_MINUTE } from '@/lib/constants';
 import { computed, ref } from 'vue';
 
 export const now = ref(new Date());
@@ -20,7 +20,7 @@ export function startTimer() {
   now.value = new Date();
 
   timer = setInterval(() => {
-    now.value = new Date(now.value.getTime() + 5 * 60 * MILlISECONDS_IN_SECONDS);
+    now.value = new Date(now.value.getTime() + SECONDS_IN_MINUTE * MILlISECONDS_IN_SECONDS);
     console.log('Timer');
   }, MILlISECONDS_IN_SECONDS);
 }
