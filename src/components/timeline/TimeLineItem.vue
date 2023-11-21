@@ -18,7 +18,15 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, nextTick, ref, watch, watchPostEffect } from "vue";
+import {
+  computed,
+  inject,
+  nextTick,
+  onMounted,
+  ref,
+  watch,
+  watchPostEffect,
+} from "vue";
 
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import TimeLineHour from "./TimeLineHour.vue";
@@ -26,6 +34,7 @@ import TimeLineStopWatch from "./TimeLineStopWatch.vue";
 import { IOptionsItem, THourItem } from "@/types";
 import { scrollToCurrentTimeLineItem } from "@/lib/helper";
 import { PAGE_TIMELINE } from "@/lib/constants";
+import { now } from "@/module/time";
 
 interface Props {
   timelineItem: THourItem;
@@ -45,19 +54,28 @@ const selectActivity = inject("select-activity") as (
 const logoTime = inject("logo-time") as () => string;
 
 const refTimelineItem = ref<HTMLLIElement | null>(null);
-
-watchPostEffect(async () => {
-  if (
+const isCurrentHourTimeline = computed(() => {
+  return (
     props.page === PAGE_TIMELINE &&
-    props.timelineItem.hour === new Date().getHours()
-  ) {
-    await nextTick();
+    props.timelineItem.hour === now.value.getHours()
+  );
+});
+
+onMounted(() => {
+  if (isCurrentHourTimeline.value) {
     scrollToCurrentTimeLineItem(refTimelineItem.value);
   }
 });
 
+watchPostEffect(async () => {
+  if (isCurrentHourTimeline.value) {
+    await nextTick();
+    scrollToHour();
+  }
+});
+
 watch(logoTime, (value) => {
-  if (value === "scroll" && props.timelineItem.hour === new Date().getHours())
+  if (value === "scroll" && props.timelineItem.hour === now.value.getHours())
     scrollToHour();
 });
 

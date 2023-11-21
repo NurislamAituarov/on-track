@@ -23,18 +23,27 @@
 </template>
 
 <script lang="ts" setup>
-import { watch } from "vue";
-import BaseButton from "../base/BaseButton.vue";
-import BaseIcon from "../base/BaseIcon.vue";
+import { computed, watch, watchEffect } from "vue";
+
+import { updateTimelineItemActivitySeconds } from "@/module/timeline-items";
 import { THourItem } from "@/types";
 import { useStopWatch } from "@/lib/hooks";
-import { updateTimelineItemActivitySeconds } from "@/module/timeline-items";
-import { formatSeconds } from "@/lib/helper";
+import { now } from "@/module/time";
+import BaseButton from "../base/BaseButton.vue";
+import BaseIcon from "../base/BaseIcon.vue";
 
 interface Props {
   timelineItem: THourItem;
 }
 const props = defineProps<Props>();
+const { seconds, isRunning, formattedSeconds, start, stop, reset } =
+  useStopWatch(props.timelineItem, updateTimelineItemActivitySeconds);
+
+watchEffect(() => {
+  if (props.timelineItem.hour !== now.value.getHours() && isRunning) {
+    stop();
+  }
+});
 
 watch(
   () => props.timelineItem.activityId,
@@ -43,8 +52,7 @@ watch(
   }
 );
 
-const isStartButtonDisabled = props.timelineItem.hour !== new Date().getHours();
-
-const { seconds, isRunning, formattedSeconds, start, stop, reset } =
-  useStopWatch(props.timelineItem, updateTimelineItemActivitySeconds);
+const isStartButtonDisabled = computed(() => {
+  return props.timelineItem.hour !== now.value.getHours();
+});
 </script>
