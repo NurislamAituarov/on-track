@@ -23,7 +23,7 @@ interface Props {
   name: string;
 }
 
-type TIcons = Record<string, unknown>;
+type TIcons = Record<string, any>;
 
 defineProps<Props>();
 

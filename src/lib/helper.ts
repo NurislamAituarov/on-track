@@ -4,7 +4,6 @@ import {
   MILlISECONDS_IN_SECONDS,
   MINUTES_IN_HOUR,
   PAGE_TIMELINE,
-  SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
 } from './constants';
 
@@ -28,6 +27,7 @@ export function generateTimelineItems(activities: IActivitiesItem[]) {
       // activitySeconds: [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0,
       activityId: null,
       activitySeconds: 0,
+      isActiveTimer: false,
     });
   }
   return timelineItems;

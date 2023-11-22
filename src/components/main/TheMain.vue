@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, provide } from "vue";
+import { inject } from "vue";
 import TheActivities from "@/pages/TheActivities.vue";
 import TheProgress from "@/pages/TheProgress.vue";
 import TheTimeline from "@/pages/TheTimeline.vue";
@@ -23,5 +23,5 @@ const routes = {
   [PAGE_PROGRESS]: TheProgress,
 };
 
-const page = inject("current-page") as () => string;
+const page = inject("current-page");
 </script>

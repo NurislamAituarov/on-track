@@ -1,24 +1,25 @@
-import { formatSeconds, generateTimelineItems } from '@/lib/helper';
+import { generateTimelineItems } from '@/lib/helper';
 import { IActivitiesItem, THourItem } from '@/types';
-import { computed, reactive, ref } from 'vue';
+import { ref } from 'vue';
 import { activities } from './activities';
 import { now } from './time';
 import { MILlISECONDS_IN_SECONDS } from '@/lib/constants';
 
-export const timelineItems: THourItem[] = reactive(generateTimelineItems(activities));
+export const timelineItems = ref(generateTimelineItems(activities.value));
 
 export function updateTimelineItem(timelineItem: THourItem, fields: THourItem) {
   return Object.assign(timelineItem, fields);
 }
 
 export function resetTimelineItemActivities(id: string) {
-  timelineItems.forEach((timelineItem) => {
+  console.log(timelineItems.value);
+  timelineItems.value.forEach((timelineItem) => {
     if (timelineItem.activityId === id) {
       updateTimelineItem(timelineItem, {
+        ...timelineItem,
         activitySeconds:
           timelineItem.hour === now.value.getHours() ? timelineItem.activitySeconds : 0,
         activityId: null,
-        hour: timelineItem.hour,
       });
     }
   });
@@ -29,7 +30,7 @@ export function selectActivity(timelineItem: THourItem, activityId: number) {
 }
 
 export function calculateTrackedActivitySeconds(activity: IActivitiesItem) {
-  return filterTimelineItemsByActivity(timelineItems, activity)
+  return filterTimelineItemsByActivity(timelineItems.value, activity)
     .map(({ activitySeconds }) => activitySeconds)
     .reduce((total, seconds) => Math.round(total + seconds), 0);
 }
@@ -38,30 +39,22 @@ function filterTimelineItemsByActivity(timelineItems: THourItem[], activity: IAc
   return timelineItems.filter(({ activityId }) => activityId === activity.id);
 }
 
-// Timer
-// export const timelineItemTimer = ref<boolean | number>(false);
-// export const seconds = ref(0);
-// export const formattedSeconds = computed(() => {
-//   return formatSeconds(seconds.value);
-// });
+// timer
+let timelineItemTimer: number | null = null;
 
-// export function startTimelineItemTimer(timelineItem: THourItem) {
-//   seconds.value = timelineItem.activitySeconds;
+export function startTimelineItemTimer(activeTimelineItem: THourItem) {
+  timelineItemTimer = setInterval(() => {
+    updateTimelineItem(activeTimelineItem, {
+      ...activeTimelineItem,
+      activitySeconds: activeTimelineItem.activitySeconds + 1,
+    });
+  }, MILlISECONDS_IN_SECONDS);
+}
 
-//   timelineItemTimer.value = setInterval(() => {
-//     updateTimelineItemActivitySeconds(timelineItem, timelineItem.activitySeconds + 50);
-//     seconds.value++;
-//   }, MILlISECONDS_IN_SECONDS);
-// }
+export function stopTimelineItemTimer() {
+  timelineItemTimer && clearInterval(timelineItemTimer);
+}
 
-// export function stopTimelineItemTimer() {
-//   if (typeof timelineItemTimer.value === 'number') {
-//     clearInterval(timelineItemTimer.value);
-//     timelineItemTimer.value = false;
-//   }
-// }
-// export function reset(timelineItem: THourItem) {
-//   stop();
-//   updateTimelineItemActivitySeconds(timelineItem, timelineItem.activitySeconds - seconds.value);
-//   seconds.value = 0;
-// }
+export function findActiveTimelineItem() {
+  return timelineItems.value.find((timelineItem) => timelineItem.isActiveTimer);
+}
