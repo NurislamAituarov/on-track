@@ -24,10 +24,10 @@ export function generateTimelineItems(activities: IActivitiesItem[]) {
   for (let hour = 0; hour < HOURS_IN_DAY; hour++) {
     timelineItems.push({
       hour,
-      // activityId: [0, 1, 2, 3, 4].includes(hour) ? activities[hour % 3].id : null,
-      // activitySeconds: [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0,
-      activityId: null,
-      activitySeconds: 0,
+      activityId: [0, 1, 2, 3, 4].includes(hour) ? activities[hour % 3].id : null,
+      activitySeconds: [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0,
+      // activityId: null,
+      // activitySeconds: 0,
     });
   }
   return timelineItems;

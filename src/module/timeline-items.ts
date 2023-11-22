@@ -1,9 +1,8 @@
-import { formatSeconds, generateTimelineItems } from '@/lib/helper';
+import { generateTimelineItems } from '@/lib/helper';
 import { IActivitiesItem, THourItem } from '@/types';
-import { computed, reactive, ref } from 'vue';
+import { reactive } from 'vue';
 import { activities } from './activities';
 import { now } from './time';
-import { MILlISECONDS_IN_SECONDS } from '@/lib/constants';
 
 export const timelineItems: THourItem[] = reactive(generateTimelineItems(activities));
 

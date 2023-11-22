@@ -1,12 +1,16 @@
 <template>
   <div class="flex w-full items-center gap-2">
-    <BaseButton type="danger" @click="reset" :disabled="!formattedSeconds">
+    <BaseButton
+      type="danger"
+      @click="reset"
+      :disabled="!timelineItem.activitySeconds"
+    >
       <BaseIcon name="ArrowPath" class="h-8" />
     </BaseButton>
     <div
       class="flex w-full flex-grow items-center bg-gray-100 px-2 py-2.5 font-mono text-3xl"
     >
-      {{ formattedSeconds }}
+      {{ formatSeconds(timelineItem.activitySeconds) }}
     </div>
     <BaseButton
       v-if="timelineItemTimer && timelineItem.hour === now.getHours()"
@@ -30,20 +34,20 @@
 import { computed, watch, watchEffect } from "vue";
 
 import { updateTimelineItem } from "@/module/timeline-items";
-import { THourItem } from "@/types";
-import { useStopWatch } from "@/lib/hooks";
-import { now } from "@/module/time";
 import BaseButton from "../base/BaseButton.vue";
 import BaseIcon from "../base/BaseIcon.vue";
+import { formatSeconds } from "@/lib/helper";
+import { useStopWatch } from "@/lib/hooks";
+import { now } from "@/module/time";
+import { THourItem } from "@/types";
 
 interface Props {
   timelineItem: THourItem;
 }
 const props = defineProps<Props>();
-const { seconds, timelineItemTimer, formattedSeconds, start, stop, reset } =
-  useStopWatch(props.timelineItem.activitySeconds, () =>
-    updateTimelineItemActivitySeconds()
-  );
+const { seconds, timelineItemTimer, start, stop, reset } = useStopWatch(
+  props.timelineItem.activitySeconds
+);
 
 watchEffect(() => {
   if (
@@ -53,18 +57,12 @@ watchEffect(() => {
     stop();
 });
 
-watch(
-  () => props.timelineItem.activityId,
-  () => updateTimelineItemActivitySeconds()
-);
-
-function updateTimelineItemActivitySeconds() {
+watch(seconds, () => {
   updateTimelineItem(props.timelineItem, {
-    activityId: props.timelineItem.activityId,
+    ...props.timelineItem,
     activitySeconds: seconds.value,
-    hour: props.timelineItem.hour,
   });
-}
+});
 
 const isStartButtonDisabled = computed(() => {
   return props.timelineItem.hour !== now.value.getHours();
