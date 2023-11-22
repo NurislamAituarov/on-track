@@ -49,9 +49,8 @@ watchEffect(() => {
   if (
     props.timelineItem.hour !== now.value.getHours() &&
     timelineItemTimer.value
-  ) {
+  )
     stop();
-  }
 });
 
 watch(

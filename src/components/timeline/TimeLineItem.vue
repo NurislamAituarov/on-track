@@ -18,7 +18,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, onMounted, ref, watch } from "vue";
+import {
+  computed,
+  inject,
+  onActivated,
+  onMounted,
+  ref,
+  watch,
+  watchEffect,
+} from "vue";
 
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import TimeLineHour from "./TimeLineHour.vue";
@@ -32,30 +40,31 @@ import { THourItem } from "@/types";
 
 interface Props {
   timelineItem: THourItem;
-  page: string;
 }
 
 const props = defineProps<Props>();
 
 const logoTime = inject("logo-time") as () => string;
-
+const page = inject("current-page") as () => string;
 const refTimelineItem = ref<HTMLLIElement | null>(null);
+
 const isCurrentHourTimeline = computed(() => {
   return (
-    props.page === PAGE_TIMELINE &&
+    page.value === PAGE_TIMELINE &&
     props.timelineItem.hour === now.value.getHours()
   );
 });
 
-onMounted(() => {
+onActivated(() => {
   if (isCurrentHourTimeline.value) {
     scrollToCurrentTimeLineItem(refTimelineItem.value);
   }
 });
 
 watch(logoTime, (value) => {
-  if (value === "scroll" && props.timelineItem.hour === now.value.getHours())
+  if (value === "scroll" && props.timelineItem.hour === now.value.getHours()) {
     scrollToHour();
+  }
 });
 
 async function scrollToHour() {
