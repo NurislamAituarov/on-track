@@ -17,13 +17,11 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, ref } from "vue";
+import { ref } from "vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 import BaseIcon from "../base/BaseIcon.vue";
+import { createActivityItem } from "@/module/activities";
 
-const createActivityItem = inject("create-activity-item") as (
-  value: string
-) => void;
 const nameActivity = ref("");
 const refValue = ref();
 

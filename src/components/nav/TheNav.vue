@@ -6,7 +6,7 @@
         :key="item.id"
         :href="`#${item.title}`"
         :class="{
-          'bg-gray-200 pointer-events-none': currentPage === item.title,
+          'bg-gray-200': currentPage === item.title,
         }"
         @click="emit('open-page', item.title)"
       >

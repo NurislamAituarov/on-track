@@ -39,10 +39,10 @@
 </template>
 
 <script lang="ts" setup>
-import { IOptionsItem } from "@/types";
-import BaseButton from "@/components/base/BaseButton.vue";
 import { onMounted, onUnmounted, onUpdated, ref } from "vue";
+import BaseButton from "@/components/base/BaseButton.vue";
 import BaseIcon from "./BaseIcon.vue";
+import { IOptionsItem } from "@/types";
 
 interface Props {
   options: IOptionsItem[];

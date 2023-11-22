@@ -22,25 +22,16 @@
 
 
 <script lang="ts" setup>
-import { inject } from "vue";
-
 import BaseButton from "@/components/base/BaseButton.vue";
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import ActivitySecondsToComplete from "./ActivitySecondsToComplete.vue";
+import BaseIcon from "../base/BaseIcon.vue";
 import { periodSelectOptions } from "@/lib/constants";
 import { IActivitiesItem } from "@/types";
-import BaseIcon from "../base/BaseIcon.vue";
+import { deleteActivityItem, updateTimeActivity } from "@/module/activities";
 
 interface Props {
   activity: IActivitiesItem;
 }
 defineProps<Props>();
-const updateTimeActivity = inject("update-time-activity") as (
-  activity: IActivitiesItem,
-  value: number
-) => void;
-
-const deleteActivityItem = inject("delete-activity-item") as (
-  id: string
-) => void;
 </script>

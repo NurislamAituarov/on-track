@@ -23,12 +23,7 @@ import { ref } from "vue";
 import ActivityItem from "@/components/activity/ActivityItem.vue";
 import TheActivityForm from "@/components/activity/TheActivityForm.vue";
 import TheActivitiesEmptyState from "@/components/activity/TheActivitiesEmptyState.vue";
-import { IActivitiesItem } from "@/types";
+import { activities } from "@/module/activities";
 
-interface Props {
-  activities: IActivitiesItem[];
-}
-
-defineProps<Props>();
 const refContainerActivities = ref();
 </script>

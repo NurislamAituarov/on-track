@@ -9,12 +9,8 @@
 
 <script setup lang="ts">
 import { THourItem } from "@/types";
-import { computed, onMounted, onUnmounted, ref } from "vue";
-import {
-  calculateSecondsSinceMidnightInPercentage,
-  endTimer,
-  startTimer,
-} from "@/module/time";
+import { computed, ref } from "vue";
+import { calculateSecondsSinceMidnightInPercentage } from "@/module/time";
 
 interface Props {
   timelineItems: THourItem[];
@@ -22,9 +18,6 @@ interface Props {
 defineProps<Props>();
 
 const indicatorRef = ref();
-
-onMounted(startTimer);
-onUnmounted(endTimer);
 
 const calculateTopOffset = computed(() => {
   return (

@@ -4,7 +4,7 @@
       @go-to-timeline="goTo('timeline')"
       @go-to-progress="goTo('progress')"
     />
-    <TheMain :page="currentPage" />
+    <TheMain />
     <TheNav
       @open-page="goTo"
       :nav-items="navItems"
@@ -56,6 +56,7 @@ function goTo(page: string) {
 }
 
 provide("logo-time", logoTime);
+provide("current-page", currentPage);
 </script>
 
 

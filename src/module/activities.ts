@@ -5,8 +5,8 @@ import {
   getTotalActivitySeconds,
   id,
 } from '@/lib/helper';
-import { timelineItems } from './timeline-items';
-import { IActivitiesItem, THourItem } from '@/types';
+import { resetTimelineItemActivities, timelineItems } from './timeline-items';
+import { IActivitiesItem } from '@/types';
 
 export const activities = reactive(generateActivities());
 export const activitySelectOptions = computed(() => generateActivitySelectOptions(activities));
@@ -20,22 +20,6 @@ export function createActivityItem(name: string) {
     id: id(),
     name,
     secondsToComplete: 0,
-  });
-}
-
-export function updateTimelineItem(timelineItem: THourItem, fields: THourItem) {
-  return Object.assign(timelineItem, fields);
-}
-
-function resetTimelineItemActivities(id: string) {
-  timelineItems.forEach((el) => {
-    if (el.activityId === id) {
-      updateTimelineItem(el, {
-        activitySeconds: 0,
-        activityId: null,
-        hour: el.hour,
-      });
-    }
   });
 }
 
