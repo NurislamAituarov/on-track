@@ -3,6 +3,7 @@ import { IActivitiesItem, THourItem } from '@/types';
 import { ref } from 'vue';
 import { activities } from './activities';
 import { now } from './time';
+import { MILlISECONDS_IN_SECONDS } from '@/lib/constants';
 
 export const timelineItems = ref(generateTimelineItems(activities.value));
 
@@ -36,4 +37,24 @@ export function calculateTrackedActivitySeconds(activity: IActivitiesItem) {
 
 function filterTimelineItemsByActivity(timelineItems: THourItem[], activity: IActivitiesItem) {
   return timelineItems.filter(({ activityId }) => activityId === activity.id);
+}
+
+// timer
+let timelineItemTimer: number | null = null;
+
+export function startTimelineItemTimer(activeTimelineItem: THourItem) {
+  timelineItemTimer = setInterval(() => {
+    updateTimelineItem(activeTimelineItem, {
+      ...activeTimelineItem,
+      activitySeconds: activeTimelineItem.activitySeconds + 1,
+    });
+  }, MILlISECONDS_IN_SECONDS);
+}
+
+export function stopTimelineItemTimer() {
+  timelineItemTimer && clearInterval(timelineItemTimer);
+}
+
+export function findActiveTimelineItem() {
+  return timelineItems.value.find((timelineItem) => timelineItem.isActiveTimer);
 }

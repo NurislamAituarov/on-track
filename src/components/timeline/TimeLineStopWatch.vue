@@ -50,7 +50,9 @@ const { seconds, timelineItemTimer, start, stop, reset } = useStopWatch(
 );
 
 onMounted(() => {
-  if (props.timelineItem.isActiveTimer) start();
+  if (props.timelineItem.isActiveTimer) {
+    start();
+  }
 });
 
 watchEffect(() => {
@@ -65,7 +67,7 @@ watch(seconds, () => {
   updateTimelineItem(props.timelineItem, {
     ...props.timelineItem,
     activitySeconds: seconds.value,
-    isActiveTimer: true,
+    isActiveTimer: Boolean(timelineItemTimer.value),
   });
 });
 

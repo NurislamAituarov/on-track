@@ -3,12 +3,20 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import { getItemFromStorage, setItemFromStorage } from './store/local-storage';
-import { timelineItems } from './module/timeline-items';
+import {
+  findActiveTimelineItem,
+  startTimelineItemTimer,
+  timelineItems,
+} from './module/timeline-items';
 import { activities } from './module/activities';
 import { State } from './types';
 import { isToday, today } from './module/time';
 
 loadState();
+const activeTimelineItem = findActiveTimelineItem();
+if (activeTimelineItem) {
+  startTimelineItemTimer(activeTimelineItem);
+}
 
 document.addEventListener('visibilitychange', () => {
   document.visibilityState === 'hidden' ? saveState() : loadState();
