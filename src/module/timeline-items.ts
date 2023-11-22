@@ -1,14 +1,11 @@
-import { generateTimelineItems } from '@/lib/helper';
+import { formatSeconds, generateTimelineItems } from '@/lib/helper';
 import { IActivitiesItem, THourItem } from '@/types';
-import { reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { activities } from './activities';
 import { now } from './time';
+import { MILlISECONDS_IN_SECONDS } from '@/lib/constants';
 
 export const timelineItems: THourItem[] = reactive(generateTimelineItems(activities));
-
-export function updateTimelineItemActivitySeconds(timelineItem: THourItem, second: number) {
-  timelineItem.activitySeconds = second;
-}
 
 export function updateTimelineItem(timelineItem: THourItem, fields: THourItem) {
   return Object.assign(timelineItem, fields);
@@ -40,3 +37,31 @@ export function calculateTrackedActivitySeconds(activity: IActivitiesItem) {
 function filterTimelineItemsByActivity(timelineItems: THourItem[], activity: IActivitiesItem) {
   return timelineItems.filter(({ activityId }) => activityId === activity.id);
 }
+
+// Timer
+// export const timelineItemTimer = ref<boolean | number>(false);
+// export const seconds = ref(0);
+// export const formattedSeconds = computed(() => {
+//   return formatSeconds(seconds.value);
+// });
+
+// export function startTimelineItemTimer(timelineItem: THourItem) {
+//   seconds.value = timelineItem.activitySeconds;
+
+//   timelineItemTimer.value = setInterval(() => {
+//     updateTimelineItemActivitySeconds(timelineItem, timelineItem.activitySeconds + 50);
+//     seconds.value++;
+//   }, MILlISECONDS_IN_SECONDS);
+// }
+
+// export function stopTimelineItemTimer() {
+//   if (typeof timelineItemTimer.value === 'number') {
+//     clearInterval(timelineItemTimer.value);
+//     timelineItemTimer.value = false;
+//   }
+// }
+// export function reset(timelineItem: THourItem) {
+//   stop();
+//   updateTimelineItemActivitySeconds(timelineItem, timelineItem.activitySeconds - seconds.value);
+//   seconds.value = 0;
+// }

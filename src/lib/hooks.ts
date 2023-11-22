@@ -1,45 +1,40 @@
 import { computed, ref } from 'vue';
 import { MILlISECONDS_IN_SECONDS } from './constants';
-import { IActivitiesItem, THourItem, UpdateTimelineItemActivityFunction } from '@/types';
+import { IActivitiesItem, THourItem } from '@/types';
 import { formatSeconds, getTotalActivitySeconds } from './helper';
 import { calculateTrackedActivitySeconds, timelineItems } from '@/module/timeline-items';
 import { calculateCompletionPercentage, trackedActivities } from '@/module/activities';
 
-export function useStopWatch(
-  timelineItem: THourItem,
-  updateTimelineItemActivitySeconds: UpdateTimelineItemActivityFunction,
-) {
-  const seconds = ref(timelineItem.activitySeconds);
-  const isRunning = ref<boolean | number>(false);
-
+export function useStopWatch(initialSeconds: number, handleSecondsChange: () => void) {
+  const timelineItemTimer = ref<boolean | number>(false);
+  const seconds = ref(initialSeconds);
   const formattedSeconds = computed(() => {
     return formatSeconds(seconds.value);
   });
 
   function start() {
-    isRunning.value = setInterval(() => {
-      updateTimelineItemActivitySeconds(timelineItem, timelineItem.activitySeconds + 50);
-
+    timelineItemTimer.value = setInterval(() => {
+      handleSecondsChange();
       seconds.value++;
     }, MILlISECONDS_IN_SECONDS);
   }
 
   function stop() {
-    if (typeof isRunning.value === 'number') {
-      clearInterval(isRunning.value);
-      isRunning.value = false;
+    if (typeof timelineItemTimer.value === 'number') {
+      clearInterval(timelineItemTimer.value);
+      timelineItemTimer.value = false;
     }
   }
 
   function reset() {
     stop();
-    updateTimelineItemActivitySeconds(timelineItem, timelineItem.activitySeconds - seconds.value);
     seconds.value = 0;
+    handleSecondsChange();
   }
 
   return {
     seconds,
-    isRunning,
+    timelineItemTimer,
     formattedSeconds,
     start,
     stop,

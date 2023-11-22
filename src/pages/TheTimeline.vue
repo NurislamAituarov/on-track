@@ -17,14 +17,16 @@
 import TheTimelineIndicator from "@/components/timeline/TheTimelineIndicator.vue";
 import TimelineItem from "@/components/timeline/TimeLineItem.vue";
 import { endTimer, startTimer } from "@/module/time";
-import { THourItem } from "@/types";
-import { onMounted, onUnmounted } from "vue";
+import { timelineItems } from "@/module/timeline-items";
+import { inject, onMounted, onUnmounted } from "vue";
 
-interface Props {
-  timelineItems: THourItem[];
-  page: string;
-}
-defineProps<Props>();
+// interface Props {
+//   timelineItems: THourItem[];
+//   page: string;
+// }
+// defineProps<Props>();
+
+const page = inject("current-page") as () => string;
 
 onMounted(() => {
   startTimer();

@@ -13,9 +13,7 @@
 import { computed, inject } from "vue";
 import ProgressItem from "@/components/progress/ProgressItem.vue";
 import TheProgressEmptyState from "@/components/progress/TheProgressEmptyState.vue";
-import { IActivitiesItem } from "@/types";
-
-const activities = inject<IActivitiesItem[]>("activities");
+import { activities } from "@/module/activities";
 
 const trackedActivities = computed(() => {
   return activities?.filter((el) => el.secondsToComplete);
