@@ -8,6 +8,7 @@ export type THourItem = {
   hour: number;
   activityId: null | string | number;
   activitySeconds: number;
+  isActiveTimer: boolean;
 };
 
 export interface IOptionsItem {
@@ -68,4 +69,10 @@ export interface IResponse {
   data: IData;
   status: number;
   statusText: string;
+}
+
+export interface State {
+  timelineItems: THourItem[];
+  activities: IActivitiesItem[];
+  date: string;
 }

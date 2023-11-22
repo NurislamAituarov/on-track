@@ -21,7 +21,7 @@ const props = defineProps<Props>();
 
 const secondsDiff = computed(() => {
   return props.activity.secondsToComplete
-    ? getTotalActivitySeconds(props.activity, timelineItems) -
+    ? getTotalActivitySeconds(props.activity, timelineItems.value) -
         props.activity.secondsToComplete
     : 0;
 });

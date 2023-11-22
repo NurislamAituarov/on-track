@@ -10,12 +10,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from "vue";
+import { computed } from "vue";
 import ProgressItem from "@/components/progress/ProgressItem.vue";
 import TheProgressEmptyState from "@/components/progress/TheProgressEmptyState.vue";
 import { activities } from "@/module/activities";
 
 const trackedActivities = computed(() => {
-  return activities?.filter((el) => el.secondsToComplete);
+  return activities.value?.filter((el) => el.secondsToComplete);
 });
 </script>

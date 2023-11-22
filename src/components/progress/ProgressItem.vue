@@ -12,7 +12,8 @@
     <div class="flex justify-between font-mono text-sm">
       <span>{{ progress }}%</span>
       <span
-        >{{ formatSeconds(getTotalActivitySeconds(activity, timelineItems)) }} /
+        >{{ formatSeconds(getTotalActivitySeconds(activity, timelineItems)) }}
+        /
         {{
           activity.secondsToComplete
             ? formatSeconds(activity.secondsToComplete)

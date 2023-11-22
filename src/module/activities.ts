@@ -1,4 +1,4 @@
-import { computed, reactive } from 'vue';
+import { computed, ref } from 'vue';
 import {
   generateActivities,
   generateActivitySelectOptions,
@@ -8,15 +8,17 @@ import {
 import { resetTimelineItemActivities, timelineItems } from './timeline-items';
 import { IActivitiesItem } from '@/types';
 
-export const activities = reactive(generateActivities());
-export const activitySelectOptions = computed(() => generateActivitySelectOptions(activities));
+export const activities = ref(generateActivities());
+export const activitySelectOptions = computed(() =>
+  generateActivitySelectOptions(activities.value),
+);
 
 export const trackedActivities = computed(() =>
-  activities.filter(({ secondsToComplete }) => secondsToComplete),
+  activities.value.filter(({ secondsToComplete }) => secondsToComplete),
 );
 
 export function createActivityItem(name: string) {
-  activities.push({
+  activities.value.push({
     id: id(),
     name,
     secondsToComplete: 0,
@@ -26,8 +28,8 @@ export function createActivityItem(name: string) {
 export function deleteActivityItem(id: string) {
   resetTimelineItemActivities(id);
 
-  const activityItemId = activities.findIndex((el) => el.id === id);
-  activities.splice(activityItemId, 1);
+  const activityItemId = activities.value.findIndex((el) => el.id === id);
+  activities.value.splice(activityItemId, 1);
 }
 
 export function updateTimeActivity(activity: IActivitiesItem, value: number) {
@@ -35,7 +37,7 @@ export function updateTimeActivity(activity: IActivitiesItem, value: number) {
 }
 
 export function getTotalActivityProgress(activity: IActivitiesItem) {
-  const activitySeconds = getTotalActivitySeconds(activity, timelineItems);
+  const activitySeconds = getTotalActivitySeconds(activity, timelineItems.value);
   const secondsToComplete = activity.secondsToComplete ? activity.secondsToComplete : 0;
 
   return ((activitySeconds * 100) / secondsToComplete).toFixed();

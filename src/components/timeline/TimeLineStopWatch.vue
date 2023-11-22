@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, watch, watchEffect } from "vue";
+import { computed, onMounted, watch, watchEffect } from "vue";
 
 import { updateTimelineItem } from "@/module/timeline-items";
 import BaseButton from "../base/BaseButton.vue";
@@ -49,6 +49,10 @@ const { seconds, timelineItemTimer, start, stop, reset } = useStopWatch(
   props.timelineItem.activitySeconds
 );
 
+onMounted(() => {
+  if (props.timelineItem.isActiveTimer) start();
+});
+
 watchEffect(() => {
   if (
     props.timelineItem.hour !== now.value.getHours() &&
@@ -61,6 +65,14 @@ watch(seconds, () => {
   updateTimelineItem(props.timelineItem, {
     ...props.timelineItem,
     activitySeconds: seconds.value,
+    isActiveTimer: true,
+  });
+});
+
+watch(timelineItemTimer, (value) => {
+  updateTimelineItem(props.timelineItem, {
+    ...props.timelineItem,
+    isActiveTimer: Boolean(value),
   });
 });
 
