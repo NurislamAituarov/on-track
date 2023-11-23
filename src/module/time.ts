@@ -4,7 +4,6 @@ import { computed, ref } from 'vue';
 export function today() {
   const today = new Date();
   today.setHours(0, 0);
-
   return today;
 }
 
