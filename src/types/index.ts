@@ -74,5 +74,5 @@ export interface IResponse {
 export interface State {
   timelineItems: THourItem[];
   activities: IActivitiesItem[];
-  date: string;
+  lastActiveAt: string;
 }
