@@ -1,14 +1,9 @@
 import { computed, ref } from 'vue';
-import {
-  generateActivities,
-  generateActivitySelectOptions,
-  getTotalActivitySeconds,
-  id,
-} from '@/lib/helper';
+import { generateActivitySelectOptions, getTotalActivitySeconds, id } from '@/lib/helper';
 import { resetTimelineItemActivities, timelineItems } from './timeline-items';
 import { IActivitiesItem } from '@/types';
 
-export const activities = ref(generateActivities());
+export const activities = ref<IActivitiesItem[]>([]);
 export const activitySelectOptions = computed(() =>
   generateActivitySelectOptions(activities.value),
 );

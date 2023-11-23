@@ -1,11 +1,10 @@
 import { generateTimelineItems } from '@/lib/helper';
 import { IActivitiesItem, THourItem } from '@/types';
 import { ref } from 'vue';
-import { activities } from './activities';
 import { now } from './time';
 import { MILlISECONDS_IN_SECONDS } from '@/lib/constants';
 
-export const timelineItems = ref(generateTimelineItems(activities.value));
+export const timelineItems = ref(generateTimelineItems());
 
 export function updateTimelineItem(timelineItem: THourItem, fields: THourItem) {
   return Object.assign(timelineItem, fields);

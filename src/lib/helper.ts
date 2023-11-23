@@ -17,14 +17,12 @@ export function normalizeHash(navItems: INavItems[]): string {
   return PAGE_TIMELINE;
 }
 
-export function generateTimelineItems(activities: IActivitiesItem[]) {
+export function generateTimelineItems() {
   const timelineItems: THourItem[] = [];
 
   for (let hour = 0; hour < HOURS_IN_DAY; hour++) {
     timelineItems.push({
       hour,
-      // activityId: [0, 1, 2, 3, 4].includes(hour) ? activities[hour % 3].id : null,
-      // activitySeconds: [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0,
       activityId: null,
       activitySeconds: 0,
       isActiveTimer: false,
@@ -43,15 +41,6 @@ export function generateActivitySelectOptions(activities: IActivitiesItem[]) {
 export function id() {
   const random = new Date().getTime().toString() + (Math.random() * (1000 - 1)).toFixed(0);
   return random;
-}
-
-export function generateActivities(): IActivitiesItem[] {
-  return ['Coding', 'Reading', 'Training'].map((el, i) => ({
-    id: id(),
-    name: el,
-    secondsToComplete: 15 * 60,
-    // secondsToComplete: i * SECONDS_IN_HOUR,
-  }));
 }
 
 export function generatePeriodSelectOptions(periodsInMinutes: number[]) {

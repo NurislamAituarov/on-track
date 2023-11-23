@@ -18,15 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  computed,
-  inject,
-  onActivated,
-  onMounted,
-  ref,
-  watch,
-  watchEffect,
-} from "vue";
+import { computed, inject, onActivated, ref, watch } from "vue";
 
 import BaseSelect from "@/components/base/BaseSelect.vue";
 import TimeLineHour from "./TimeLineHour.vue";
