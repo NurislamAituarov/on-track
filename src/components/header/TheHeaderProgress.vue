@@ -25,7 +25,6 @@ import { CheckCircleIcon } from "@heroicons/vue/24/solid";
 import { PAGE_PROGRESS } from "@/lib/constants";
 import { useTotalProgress } from "@/lib/hooks";
 import { getProgressColorClass } from "@/lib/helper";
-import { activities } from "@/module/activities";
 
 const percentage = useTotalProgress();
 </script>

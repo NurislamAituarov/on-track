@@ -18,12 +18,13 @@ import {
   EyeIcon as Eye,
   EyeSlashIcon as EyeSlash,
 } from "@heroicons/vue/24/outline";
+import { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
 
 interface Props {
   name: string;
 }
 
-type TIcons = Record<string, any>;
+type TIcons = Record<string, FunctionalComponent<HTMLAttributes & VNodeProps>>;
 
 defineProps<Props>();
 

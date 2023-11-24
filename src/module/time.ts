@@ -1,9 +1,4 @@
-import {
-  MILlISECONDS_IN_SECONDS,
-  SECONDS_IN_DAY,
-  SECONDS_IN_HOUR,
-  SECONDS_IN_MINUTE,
-} from '@/lib/constants';
+import { MILlISECONDS_IN_SECONDS, SECONDS_IN_DAY, SECONDS_IN_HOUR } from '@/lib/constants';
 import { computed, ref } from 'vue';
 
 export function today() {
@@ -37,13 +32,13 @@ const secondsSinceMidnight = computed(() => {
   return (now.value.getTime() - midnight.value) / MILlISECONDS_IN_SECONDS;
 });
 
-// Timer
+// CURRENT DATE TIMER
 let currentDateTimer: number;
 export function startCurrentDateTimer() {
   now.value = today();
 
   currentDateTimer = setInterval(() => {
-    now.value = new Date(now.value.getTime() + SECONDS_IN_MINUTE * MILlISECONDS_IN_SECONDS);
+    now.value = new Date(now.value.getTime());
     console.log('Timer');
   }, MILlISECONDS_IN_SECONDS);
 }

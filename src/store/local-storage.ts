@@ -1,16 +1,31 @@
 import { activities } from '@/module/activities';
 import { endOfHour, isToday, toSeconds, today } from '@/module/time';
-import { timelineItems } from '@/module/timeline-items';
-import { State, THourItem } from '@/types';
+import {
+  activeTimelineItem,
+  startTimelineItemTimer,
+  stopTimelineItemTimer,
+  timelineItems,
+} from '@/module/timeline-items';
+import { ItemFromStorage, State, THourItem } from '@/types';
 
 export const getItemFromStorage = (key: string) => {
   const item = localStorage.getItem(key);
   return item ? JSON.parse(item) : {};
 };
 
-export const setItemFromStorage = (key: string, value: any) => {
+export const setItemFromStorage = (key: string, value: ItemFromStorage) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
+
+export function syncState(isShouldLoad = true) {
+  isShouldLoad ? loadState() : saveState();
+
+  if (activeTimelineItem.value) {
+    isShouldLoad
+      ? startTimelineItemTimer(activeTimelineItem.value)
+      : stopTimelineItemTimer(activeTimelineItem.value);
+  }
+}
 
 export function saveState() {
   setItemFromStorage('ontrack', {

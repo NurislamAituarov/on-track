@@ -21,15 +21,15 @@
 <script lang="ts" setup>
 import { onMounted } from "vue";
 
+import BaseIcon from "../base/BaseIcon.vue";
 import NavIcon from "@/components/nav/NavItem.vue";
 import { INavItems } from "@/types";
-import BaseIcon from "../base/BaseIcon.vue";
 
 defineProps<{ navItems: INavItems[]; currentPage: string }>();
 const emit = defineEmits(["open-page"]);
 
 onMounted(() => {
-  console.log("mounted", window.location.hash.substring(1));
+  // console.log("mounted", window.location.hash.substring(1));
 });
 </script>
 
