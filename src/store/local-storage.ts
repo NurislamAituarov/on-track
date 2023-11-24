@@ -1,6 +1,5 @@
-import { MILlISECONDS_IN_SECONDS } from '@/lib/constants';
 import { activities } from '@/module/activities';
-import { isToday, today } from '@/module/time';
+import { endOfHour, isToday, toSeconds, today } from '@/module/time';
 import { timelineItems } from '@/module/timeline-items';
 import { State, THourItem } from '@/types';
 
@@ -35,8 +34,14 @@ function syncIdleSeconds(timelineItems: THourItem[], lastActiveAt: Date) {
   const activeTimelineItem = timelineItems.find((timelineItem) => timelineItem.isActiveTimer);
 
   if (activeTimelineItem) {
-    activeTimelineItem.activitySeconds += (+today() - +lastActiveAt) / MILlISECONDS_IN_SECONDS;
+    activeTimelineItem.activitySeconds += calculateIdleSeconds(lastActiveAt);
   }
 
   return timelineItems;
+}
+
+function calculateIdleSeconds(lastActiveAt: Date) {
+  return lastActiveAt.getHours() === today().getHours()
+    ? toSeconds(+today() - +lastActiveAt)
+    : toSeconds(+endOfHour(lastActiveAt) - +lastActiveAt);
 }

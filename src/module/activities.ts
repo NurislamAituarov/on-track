@@ -1,14 +1,9 @@
 import { computed, ref } from 'vue';
-import {
-  generateActivities,
-  generateActivitySelectOptions,
-  getTotalActivitySeconds,
-  id,
-} from '@/lib/helper';
+import { generateActivitySelectOptions, getTotalActivitySeconds, id } from '@/lib/helper';
 import { resetTimelineItemActivities, timelineItems } from './timeline-items';
 import { IActivitiesItem } from '@/types';
 
-export const activities = ref(generateActivities());
+export const activities = ref<IActivitiesItem[]>([]);
 export const activitySelectOptions = computed(() =>
   generateActivitySelectOptions(activities.value),
 );
@@ -45,7 +40,7 @@ export function getTotalActivityProgress(activity: IActivitiesItem) {
 
 export function calculateCompletionPercentage(totalTrackedSeconds: number) {
   const percentage = Math.floor((totalTrackedSeconds * 100) / totalActivitySecondsToComplete.value);
-  if (Number.isNaN(percentage)) return 0;
+  // if (Number.isNaN(percentage)) return 0;
 
   return percentage;
 }

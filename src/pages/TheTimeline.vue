@@ -15,11 +15,10 @@
 <script lang="ts" setup>
 import TheTimelineIndicator from "@/components/timeline/TheTimelineIndicator.vue";
 import TimelineItem from "@/components/timeline/TimeLineItem.vue";
-import { endTimer, startTimer } from "@/module/time";
-import { stopTimelineItemTimer, timelineItems } from "@/module/timeline-items";
+import { stopCurrentDateTimer, startCurrentDateTimer } from "@/module/time";
+import { timelineItems } from "@/module/timeline-items";
 import { onMounted, onUnmounted } from "vue";
 
-stopTimelineItemTimer();
-onMounted(startTimer);
-onUnmounted(endTimer);
+onMounted(startCurrentDateTimer);
+onUnmounted(stopCurrentDateTimer);
 </script>

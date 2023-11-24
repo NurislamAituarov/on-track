@@ -1,6 +1,9 @@
 <template>
   <a :href="`#${PAGE_PROGRESS}`" class="text-sm">
-    <div v-if="percentage >= 100" class="flex items-center gap-2">
+    <div
+      v-if="isNaN(percentage) || percentage > 100"
+      class="flex items-center gap-2"
+    >
       <p>Day complete!</p>
       <CheckCircleIcon class="h-7 text-green-500" />
     </div>
@@ -22,6 +25,7 @@ import { CheckCircleIcon } from "@heroicons/vue/24/solid";
 import { PAGE_PROGRESS } from "@/lib/constants";
 import { useTotalProgress } from "@/lib/hooks";
 import { getProgressColorClass } from "@/lib/helper";
+import { activities } from "@/module/activities";
 
 const percentage = useTotalProgress();
 </script>

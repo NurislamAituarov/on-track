@@ -2,7 +2,7 @@
   <div class="flex w-full items-center gap-2">
     <BaseButton
       type="danger"
-      @click="reset"
+      @click="resetTimelineItemTimer(timelineItem)"
       :disabled="!timelineItem.activitySeconds"
     >
       <BaseIcon name="ArrowPath" class="h-8" />
@@ -15,14 +15,14 @@
     <BaseButton
       v-if="timelineItemTimer && timelineItem.hour === now.getHours()"
       type="warning"
-      @click="stop"
+      @click="stopTimelineItemTimer(timelineItem)"
     >
       <BaseIcon name="Pause" class="h-8" />
     </BaseButton>
     <BaseButton
       v-else
       type="success"
-      @click="start"
+      @click="startTimelineItemTimer(timelineItem)"
       :disabled="isStartButtonDisabled"
     >
       <BaseIcon name="Play" class="h-8" />
@@ -31,52 +31,23 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, watch, watchEffect } from "vue";
-
-import { updateTimelineItem } from "@/module/timeline-items";
+import { computed } from "vue";
 import BaseButton from "../base/BaseButton.vue";
 import BaseIcon from "../base/BaseIcon.vue";
 import { formatSeconds } from "@/lib/helper";
-import { useStopWatch } from "@/lib/hooks";
 import { now } from "@/module/time";
 import { THourItem } from "@/types";
+import {
+  resetTimelineItemTimer,
+  startTimelineItemTimer,
+  stopTimelineItemTimer,
+  timelineItemTimer,
+} from "@/module/timeline-items";
 
 interface Props {
   timelineItem: THourItem;
 }
 const props = defineProps<Props>();
-const { seconds, timelineItemTimer, start, stop, reset } = useStopWatch(
-  props.timelineItem.activitySeconds
-);
-
-onMounted(() => {
-  if (props.timelineItem.isActiveTimer) {
-    start();
-  }
-});
-
-watchEffect(() => {
-  if (
-    props.timelineItem.hour !== now.value.getHours() &&
-    timelineItemTimer.value
-  )
-    stop();
-});
-
-watch(seconds, () => {
-  updateTimelineItem(props.timelineItem, {
-    ...props.timelineItem,
-    activitySeconds: seconds.value,
-    isActiveTimer: Boolean(timelineItemTimer.value),
-  });
-});
-
-watch(timelineItemTimer, (value) => {
-  updateTimelineItem(props.timelineItem, {
-    ...props.timelineItem,
-    isActiveTimer: Boolean(value),
-  });
-});
 
 const isStartButtonDisabled = computed(() => {
   return props.timelineItem.hour !== now.value.getHours();

@@ -1,9 +1,14 @@
-import { MILlISECONDS_IN_SECONDS, SECONDS_IN_DAY, SECONDS_IN_MINUTE } from '@/lib/constants';
+import {
+  MILlISECONDS_IN_SECONDS,
+  SECONDS_IN_DAY,
+  SECONDS_IN_HOUR,
+  SECONDS_IN_MINUTE,
+} from '@/lib/constants';
 import { computed, ref } from 'vue';
 
 export function today() {
   const today = new Date();
-  today.setHours(0, 0);
+  // today.setHours(0, 0);
   return today;
 }
 
@@ -32,15 +37,28 @@ const secondsSinceMidnight = computed(() => {
   return (now.value.getTime() - midnight.value) / MILlISECONDS_IN_SECONDS;
 });
 
-let timer: number;
-export function startTimer() {
+// Timer
+let currentDateTimer: number;
+export function startCurrentDateTimer() {
   now.value = today();
 
-  timer = setInterval(() => {
+  currentDateTimer = setInterval(() => {
     now.value = new Date(now.value.getTime() + SECONDS_IN_MINUTE * MILlISECONDS_IN_SECONDS);
     console.log('Timer');
   }, MILlISECONDS_IN_SECONDS);
 }
-export function endTimer() {
-  clearInterval(timer);
+export function stopCurrentDateTimer() {
+  clearInterval(currentDateTimer);
+}
+
+export function endOfHour(date: Date) {
+  const endOfHour = new Date(date);
+
+  endOfHour.setTime(endOfHour.getTime() + SECONDS_IN_HOUR * MILlISECONDS_IN_SECONDS);
+  endOfHour.setMinutes(0, 0, 0);
+  return endOfHour;
+}
+
+export function toSeconds(milliseconds: number) {
+  return Math.round(milliseconds / MILlISECONDS_IN_SECONDS);
 }
