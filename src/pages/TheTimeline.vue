@@ -16,10 +16,9 @@
 import TheTimelineIndicator from "@/components/timeline/TheTimelineIndicator.vue";
 import TimelineItem from "@/components/timeline/TimeLineItem.vue";
 import { stopCurrentDateTimer, startCurrentDateTimer } from "@/module/time";
-import { stopTimelineItemTimer, timelineItems } from "@/module/timeline-items";
+import { timelineItems } from "@/module/timeline-items";
 import { onMounted, onUnmounted } from "vue";
 
-stopTimelineItemTimer();
 onMounted(startCurrentDateTimer);
 onUnmounted(stopCurrentDateTimer);
 </script>

@@ -1,40 +1,8 @@
-import { computed, ref } from 'vue';
-import { MILlISECONDS_IN_SECONDS } from './constants';
+import { computed } from 'vue';
 import { IActivitiesItem } from '@/types';
 import { getTotalActivitySeconds } from './helper';
 import { calculateTrackedActivitySeconds, timelineItems } from '@/module/timeline-items';
 import { calculateCompletionPercentage, trackedActivities } from '@/module/activities';
-
-export function useStopWatch(initialSeconds: number) {
-  const timelineItemTimer = ref<boolean | number>(false);
-  const seconds = ref(initialSeconds);
-
-  function start() {
-    timelineItemTimer.value = setInterval(() => {
-      seconds.value++;
-    }, MILlISECONDS_IN_SECONDS);
-  }
-
-  function stop() {
-    if (typeof timelineItemTimer.value === 'number') {
-      clearInterval(timelineItemTimer.value);
-      timelineItemTimer.value = false;
-    }
-  }
-
-  function reset() {
-    stop();
-    seconds.value = 0;
-  }
-
-  return {
-    seconds,
-    timelineItemTimer,
-    start,
-    stop,
-    reset,
-  };
-}
 
 export function useProgress(activity: IActivitiesItem) {
   return computed(() => {

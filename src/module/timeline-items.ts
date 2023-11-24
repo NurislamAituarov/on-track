@@ -1,6 +1,6 @@
 import { generateTimelineItems } from '@/lib/helper';
 import { IActivitiesItem, THourItem } from '@/types';
-import { ref } from 'vue';
+import { Ref, computed, ref, watchEffect } from 'vue';
 import { now } from './time';
 import { MILlISECONDS_IN_SECONDS } from '@/lib/constants';
 
@@ -38,22 +38,53 @@ function filterTimelineItemsByActivity(timelineItems: THourItem[], activity: IAc
   return timelineItems.filter(({ activityId }) => activityId === activity.id);
 }
 
-// timer
-let timelineItemTimer: number | null = null;
+export function findActiveTimelineItem() {
+  return timelineItems.value.find((timelineItem) => timelineItem.isActiveTimer);
+}
 
-export function startTimelineItemTimer(activeTimelineItem: THourItem) {
-  timelineItemTimer = setInterval(() => {
-    updateTimelineItem(activeTimelineItem, {
-      ...activeTimelineItem,
-      activitySeconds: activeTimelineItem.activitySeconds + 1,
+// TIMELINE ITEM TIMER //
+
+export const timelineItemTimer: Ref<number | null> = ref(null);
+
+export function startTimelineItemTimer(timelineItem: THourItem) {
+  updateTimelineItem(timelineItem, {
+    ...timelineItem,
+    isActiveTimer: true,
+  });
+
+  timelineItemTimer.value = setInterval(() => {
+    updateTimelineItem(timelineItem, {
+      ...timelineItem,
+      activitySeconds: timelineItem.activitySeconds + 1,
     });
   }, MILlISECONDS_IN_SECONDS);
 }
 
-export function stopTimelineItemTimer() {
-  timelineItemTimer && clearInterval(timelineItemTimer);
+export function stopTimelineItemTimer(timelineItem: THourItem) {
+  updateTimelineItem(timelineItem, {
+    ...timelineItem,
+    isActiveTimer: false,
+  });
+
+  timelineItemTimer.value && clearInterval(timelineItemTimer.value);
+  timelineItemTimer.value = null;
 }
 
-export function findActiveTimelineItem() {
-  return timelineItems.value.find((timelineItem) => timelineItem.isActiveTimer);
+export function resetTimelineItemTimer(timelineItem: THourItem) {
+  updateTimelineItem(timelineItem, {
+    ...timelineItem,
+    activitySeconds: 0,
+  });
+
+  stopTimelineItemTimer(timelineItem);
 }
+
+const activeTimelineItem = computed(() =>
+  timelineItems.value.find((timelineItem) => timelineItem.isActiveTimer),
+);
+
+watchEffect(() => {
+  if (activeTimelineItem.value && activeTimelineItem.value.hour !== now.value.getHours()) {
+    stopTimelineItemTimer(activeTimelineItem.value);
+  }
+});
