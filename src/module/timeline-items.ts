@@ -38,9 +38,9 @@ function filterTimelineItemsByActivity(timelineItems: THourItem[], activity: IAc
   return timelineItems.filter(({ activityId }) => activityId === activity.id);
 }
 
-export function findActiveTimelineItem() {
-  return timelineItems.value.find((timelineItem) => timelineItem.isActiveTimer);
-}
+export const activeTimelineItem = computed(() =>
+  timelineItems.value.find((timelineItem) => timelineItem.isActiveTimer),
+);
 
 // TIMELINE ITEM TIMER //
 
@@ -78,10 +78,6 @@ export function resetTimelineItemTimer(timelineItem: THourItem) {
 
   stopTimelineItemTimer(timelineItem);
 }
-
-const activeTimelineItem = computed(() =>
-  timelineItems.value.find((timelineItem) => timelineItem.isActiveTimer),
-);
 
 watchEffect(() => {
   if (activeTimelineItem.value && activeTimelineItem.value.hour !== now.value.getHours()) {

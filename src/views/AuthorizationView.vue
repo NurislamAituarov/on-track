@@ -92,9 +92,9 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 import BaseButton from "@/components/base/BaseButton.vue";
+import BaseIcon from "@/components/base/BaseIcon.vue";
 import TheSpinner from "@/components/spinner/TheSpinner.vue";
 
-import BaseIcon from "@/components/base/BaseIcon.vue";
 import { PAGE_TIMELINE } from "@/lib/constants";
 import { resetForm, useForm } from "@/module/form";
 import { IForm, IResponse } from "@/types";

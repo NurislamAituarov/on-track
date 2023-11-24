@@ -56,8 +56,6 @@ export interface IErrors {
   validateEmail?: boolean;
 }
 
-export type UpdateTimelineItemActivityFunction = (timelineItem: THourItem, second: number) => void;
-
 // Type response
 interface IData {
   email: string;
@@ -75,4 +73,10 @@ export interface State {
   timelineItems: THourItem[];
   activities: IActivitiesItem[];
   lastActiveAt: string;
+}
+
+export interface ItemFromStorage {
+  timelineItems: THourItem[];
+  activities: IActivitiesItem[];
+  lastActiveAt: Date;
 }
