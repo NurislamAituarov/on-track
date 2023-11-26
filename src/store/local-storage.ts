@@ -1,5 +1,5 @@
 import { activities } from '@/module/activities';
-import { endOfHour, isToday, toSeconds, today } from '@/module/time';
+import { endOfHour, isToday, toSeconds, today, tomorrow } from '@/module/time';
 import {
   activeTimelineItem,
   startTimelineItemTimer,

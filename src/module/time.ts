@@ -38,7 +38,7 @@ export function startCurrentDateTimer() {
   now.value = today();
 
   currentDateTimer = setInterval(() => {
-    now.value = new Date(now.value.getTime());
+    now.value = new Date(now.value.getTime() + MILlISECONDS_IN_SECONDS);
     console.log('Timer');
   }, MILlISECONDS_IN_SECONDS);
 }
