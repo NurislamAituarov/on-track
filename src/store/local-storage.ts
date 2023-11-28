@@ -19,7 +19,6 @@ export const setItemFromStorage = (key: string, value: ItemFromStorage) => {
 
 export function syncState(isShouldLoad = true) {
   isShouldLoad ? loadState() : saveState();
-
   if (activeTimelineItem.value) {
     isShouldLoad
       ? startTimelineItemTimer(activeTimelineItem.value)
