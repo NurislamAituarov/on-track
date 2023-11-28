@@ -6,8 +6,12 @@ import { syncState } from './store/local-storage';
 
 syncState();
 
-document.addEventListener('visibilitychange', () => {
-  syncState(document.visibilityState === 'visible');
-});
+let prevVisibilityState = document.visibilityState;
 
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState !== prevVisibilityState) {
+    prevVisibilityState = document.visibilityState;
+    syncState(document.visibilityState === 'visible');
+  }
+});
 createApp(App).use(store).use(router).mount('#app');
